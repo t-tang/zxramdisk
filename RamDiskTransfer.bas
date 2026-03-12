@@ -23,7 +23,7 @@ PROC
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
 
-    #include"asm/ramdisk/write/RamDiskCalcNonShadowedByteCount.asm"
+    #include"asm/ramdisk/RamDiskCalcNonShadowedByteCount.asm"
 ENDP
 End Asm
 End Function
@@ -38,6 +38,19 @@ PROC
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
     #include"asm/ramdisk/write/RamDiskWriteShadowedBytes.asm"
+ENDP
+End Asm
+End Function
+
+Function Fastcall RamDiskWriteNonShadowedBytes(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
+Asm
+PROC
+    ; hl = source address
+    pop af          ; return address to ZX Basic
+    pop de          ; de = dest address in RamDisk (linear)
+    pop bc          ; bc = remaining bytes to be copied
+    push af         ; restore return address
+    #include"asm/ramdisk/write/RamDiskWriteNonShadowedBytes.asm"
 ENDP
 End Asm
 End Function

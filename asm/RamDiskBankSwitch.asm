@@ -1,3 +1,5 @@
+#ifndef __LIBRARY_RAMDISK_BANKSWITCH_ASM__
+#define __LIBRARY_RAMDISK_BANKSWITCH_ASM__
 ;---------------------------------------------
 ; in   : a = logical bank
 ; keep : de,hl
@@ -5,7 +7,7 @@
 RamDiskBankSwitch
 PROC
 
-    RAMDISK_BANK_M equ 5B5C 
+    RAMDISK_BANK_M equ $5B5C 
     local RAMDISK_BANK_M
 
     ld bc,logicalbanks ; mapping from logical to physical banks
@@ -35,6 +37,7 @@ local setphysicalbank:
 ;----------------------------------------------
 logicalbanks:
 local logicalbanks:
+    ;physical         logical
     db $01          ; logical bank 0
     db $03          ; logical bank 1
     db $04          ; logical bank 2
@@ -43,3 +46,4 @@ local logicalbanks:
     db $00          ; logical bank 5
 
 ENDP
+#endif

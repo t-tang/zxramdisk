@@ -1,5 +1,5 @@
 Sub Fastcall RamDiskBankSwitch(logicalbanknum as ubyte)
 Asm
-    #include "RamDiskBankSwitch.asm"
+    #include "../asm/RamDiskBankSwitch.asm"
 End Asm
 End Sub

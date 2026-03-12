@@ -1,0 +1,25 @@
+#include<hex.bas>
+#include"sys/print42.bas"
+#include"Tests.bas"
+
+'This routine calculates the number of source bytes below $c000
+CheckResult(RamDiskCalcNonShadowedByteCount($0000,$10), $0010, "Calc Non Shadowed Byte Count")
+CheckResult(RamDiskCalcNonShadowedByteCount($BFFF,$10), $0001, "Calc Non Shadowed Byte Count")
+
+'This routine copies source bytes below $c000 in to ram disk
+CheckTransfer($0000,$0000, RamDiskWriteNonShadowedBytes($0000,$0000,$20),"Write Non Shadowed Bytes")
+
+'This routine uses a buffer to copy source bytes above $c000
+CheckResult(RamDiskWriteShadowedBytes($C000,$4000,$21), $0020,"Write Shadowed Bytes")
+CheckResult(RamDiskWriteShadowedBytes($C000,$4000,$1F), $001F,"Write Shadowed Bytes")
+
+'This routine splits the source bytes into chunks which all fit inside a bank
+'Simplifies downstream routines because they don't need to worry about bank boundaries
+CheckResult(RamDiskNextChunk($0000,$10), $0010,"Next Chunk")
+CheckResult(RamDiskNextChunk($BFFF,$10), $0001,"Next Chunk")
+CheckResult(RamDiskNextChunk($0000,$4100), $4000,"Next Chunk")
+CheckResult(RamDiskNextChunk($1000,$4100), $3000,"Next Chunk")
+
+'This routine copies source bytes into the ram disk bank indicated by ram disk start address
+CheckResult(RamDiskTransferChunk($0000,$0000,$2000),$2000,"Transfer Chunk")
+
