@@ -4,7 +4,6 @@
 ' $0c start address in ramdisk 2 bytes
 '--------------------------------------------------------------
 
-'calculate how many bytes fit into the bank at ram disk address
 Function Fastcall RamDiskNextChunk(ramdiskAddress as uinteger, remainingBytes as uinteger) as uinteger
 Asm
                     ; hl = ramdiskAddress (linear)
@@ -16,17 +15,15 @@ Asm
 End Asm
 End Function
 
-'copy all source bytes below $c000
-Function Fastcall RamDiskWriteNonShadowedBytes(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
+Function Fastcall RamDiskCalcNonShadowedByteCount(sourceAddress as uinteger, bytesLen as uinteger) as uinteger
 Asm
 PROC
-    ; hl = source address
+                    ; hl = source address
     pop af          ; return address to ZX Basic
-    pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
 
-    #include"asm/ramdisk/write/RamDiskWriteNonShadowedBytes.asm"
+    #include"asm/ramdisk/write/RamDiskCalcNonShadowedByteCount.asm"
 ENDP
 End Asm
 End Function

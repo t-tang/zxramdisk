@@ -1,11 +1,10 @@
 ;--------------------------------------------------
-; in : hl = source address
-; in : de = destination ramdisk address
-; in : bc = remaining bytes to be copied
-; out: hl = number of bytes written to ram disk
-; copies all bytes below $c000 to the ram disk
+; in  : hl = source address
+; in  : bc = remaining bytes to be copied
+; out : hl = number of source bytes below $c000
+; keep: no registers are preserved
 ;--------------------------------------------------
-RamDiskWriteNonShadowedBytes
+RamDiskCalcNonShadowedByteCount
 PROC
     push hl         ; save the source address
     add hl,bc       ; find the end of the source data

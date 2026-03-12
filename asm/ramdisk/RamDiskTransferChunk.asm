@@ -16,7 +16,7 @@ PROC
     ld l,c
     ld (bytesremaining),hl
 
-    call RamDiskWriteNonShadowedBytes   ; write all source bytes below $c000 efficiently
+    call RamDiskCalcNonShadowedByteCount   ; write all source bytes below $c000 efficiently
     call updatevars
 
 nextwrite:

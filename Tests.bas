@@ -17,9 +17,9 @@ End Sub
 
 cls
 
-'This routine only copies source bytes below $c000
-Test(RamDiskWriteNonShadowedBytes($0000,$0000,$10), $0010, "Write Non Shadowed Bytes")
-Test(RamDiskWriteNonShadowedBytes($BFFF,$0000,$10), $0001, "Write Non Shadowed Bytes")
+'This routine calculates the number of source bytes below $c000
+Test(RamDiskCalcNonShadowedByteCount($0000,$10), $0010, "Calc Non Shadowed Byte Count")
+Test(RamDiskCalcNonShadowedByteCount($BFFF,$10), $0001, "Calc Non Shadowed Byte Count")
 
 'This routine uses a buffer to copy source bytes above $c000
 Test(RamDiskWriteShadowedBytes($C000,$4000,$21), $0020,"Write Shadowed Bytes")
