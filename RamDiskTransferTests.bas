@@ -2,16 +2,21 @@
 #include"sys/print42.bas"
 #include"Tests.bas"
 
+Dim someData($20) as ubyte
+for i = 0 to $20 - 1: someData(i) = i: next
+for i = 0 to $20 - 1: poke $c100 + i, i: next
+
 'This routine calculates the number of source bytes below $c000
 CheckResult(RamDiskCalcNonShadowedByteCount($0000,$10), $0010, "Calc Non Shadowed Byte Count")
 CheckResult(RamDiskCalcNonShadowedByteCount($BFFF,$10), $0001, "Calc Non Shadowed Byte Count")
 
 'This routine copies source bytes below $c000 in to ram disk
-CheckTransfer($0000,$0000, RamDiskWriteNonShadowedBytes($0000,$0000,$20),"Write Non Shadowed Bytes")
+CheckTransfer(@someData(0),$0000, RamDiskWriteNonShadowedBytes(@someData(0),$0000,$20),"Write Non Shadowed Bytes")
 
 'This routine uses a buffer to copy source bytes above $c000
 CheckResult(RamDiskWriteShadowedBytes($C000,$4000,$21), $0020,"Write Shadowed Bytes")
 CheckResult(RamDiskWriteShadowedBytes($C000,$4000,$1F), $001F,"Write Shadowed Bytes")
+CheckTransfer($C100,$4020, RamDiskWriteShadowedBytes($C100,$4020,$20),"Write Shadowed Bytes")
 
 'This routine splits the source bytes into chunks which all fit inside a bank
 'Simplifies downstream routines because they don't need to worry about bank boundaries

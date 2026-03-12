@@ -34,10 +34,11 @@ Sub CheckTransfer(sourceAddress as uinteger, ramdiskAddress as uinteger, byteCou
     'switch bank into upper memory
     dim memBank as ubyte = ramdiskAddress / $4000
     RamDiskBankSwitch(memBank)
+    dim rebasedAddress as uinteger = (ramdiskAddress bAND %0011111111111111) + $c000
 
     dim ramXorCheck, ramSumCheck as ubyte
     for i = 0 to byteCount - 1
-        aByte = peek(sourceAddress + i)
+        aByte = peek(rebasedAddress + i)
         ramXorCheck = ramXorCheck xor aByte
         ramSumCheck = ramSumCheck + aByte
     next

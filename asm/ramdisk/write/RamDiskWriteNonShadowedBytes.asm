@@ -21,7 +21,7 @@ PROC
     pop bc                  ; restore the byte count
 
     ld a,d                  ; high byte for linear dest address
-    and %11000000           ; mask out the bank selector
+    and %00111111           ; mask out the bank selector
     ld d,a                  ; de = 0 based dest address in memory bank
 
     push bc                 ; save byte count for return
