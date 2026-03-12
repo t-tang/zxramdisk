@@ -12,7 +12,7 @@ Asm
     pop bc          ; bc = remaining bytes
     push af         ; restore return address
 
-    #include"asm/RamDiskNextChunk.asm"
+    #include"asm/ramdisk/RamDiskNextChunk.asm"
 End Asm
 End Function
 
@@ -26,7 +26,7 @@ PROC
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
 
-    #include"asm/write/RamDiskWriteNonShadowedBytes.asm"
+    #include"asm/ramdisk/write/RamDiskWriteNonShadowedBytes.asm"
 ENDP
 End Asm
 End Function
@@ -40,7 +40,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/write/RamDiskWriteShadowedBytes.asm"
+    #include"asm/ramdisk/write/RamDiskWriteShadowedBytes.asm"
 ENDP
 End Asm
 End Function
@@ -55,7 +55,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/RamDiskTransferChunk.asm"
+    #include"asm/ramdisk/RamDiskTransferChunk.asm"
 ENDP
 End Asm
 End Function
@@ -69,7 +69,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/RamDiskTransfer.asm"
+    #include"asm/ramdisk/RamDiskTransfer.asm"
 ENDP
 End Asm
 End Function

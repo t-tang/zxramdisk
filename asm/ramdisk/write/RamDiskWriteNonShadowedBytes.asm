@@ -7,8 +7,6 @@
 ;--------------------------------------------------
 RamDiskWriteNonShadowedBytes
 PROC
-
-
     push hl         ; save the source address
     add hl,bc       ; find the end of the source data
     dec hl

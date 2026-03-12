@@ -5,7 +5,7 @@ Asm
     pop bc      ; bc = length
     push af     ; restore return address
 
-    ex de,hl                    ; de = filename
+    ex de,hl    ; de = filename
 
     #include "asm/RamDiskWriteCatalogEntry.asm"
 
