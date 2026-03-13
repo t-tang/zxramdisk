@@ -17,10 +17,9 @@ PROC
     add hl,bc
     dec hl          ; hl = end source address
 
-    ld a,$c0
-    cp h            ; check end source address is below $c000
+    ld a,h
+    cp $c0            ; check end source address is below $c000
     jr c,allbelowc0
-    jr nz,allbelowc0
 
 ; start address < $c000 and end address >= $c000
 ; calculate how many bytes below $c000

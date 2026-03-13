@@ -9,6 +9,7 @@
 RamDiskBankSwitchToAddress:
 PROC
     ld a,d                  ; top 2 bits identify the logical ramdisk bank
+    and %11000000
     rlca    
     rlca                    ; a = ramdisk logical bank
     call RamDiskBankSwitch  ; switch ramdisk bank into upper memory
