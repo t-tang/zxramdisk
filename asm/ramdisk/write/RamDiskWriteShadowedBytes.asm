@@ -1,3 +1,6 @@
+#include"../RamDiskBankSwitchToAddress.asm"
+#include"../RamDiskRebaseAddress.asm"
+
 ;--------------------------------------------------
 ; in : hl = ramdisk address
 ; in : bc = remaining bytes to be transferred
@@ -24,9 +27,23 @@ transferbuffer:
 local transferbuffer:
 
     pop hl              ; recover source address
+    push bc             ; save byte count for return
+    push bc             ; save byte count transfer to ram disk
+    push de             ; save ram disk address
+    ld de,buffer        ; de = buffer
+    ldir                ; transfer bytes from main memory to buffer
 
-    ld l,c
-    ld h,b
+    pop de                          ; recover ram disk address
+    pop bc                          ; recover byte count
+    call RamDiskBankSwitchToAddress ; switch ramdisk bank into upper memory
+    call RamDiskRebaseAddress       ; rebase ram disk address into upper memory 
+    ld hl,buffer
+    ldir                            ; transfer bytes from main memory to buffer
+
+    ld a,5
+    call RamDiskBankSwitch  ; restore memory bank layout
+
+    pop hl                  ; return byte count
 
     ret
 

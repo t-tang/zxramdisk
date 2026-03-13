@@ -16,7 +16,7 @@ PROC
     ld hl,$c000             ;
     add hl,de               ; rebase destination addres to $c000
     ex de,hl                ; de = $c000 based dest address in main memory
-    pop hl                  ; restore hl to caller
+    pop hl                  ; restore hl
     ret
 ENDP
 #endif
