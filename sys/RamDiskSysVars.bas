@@ -3,12 +3,6 @@
 
 Sub fastcall RamDiskSysVars()
 asm
-;----------------------------------------------------------------------
-; Used as RAM disk transfer buffer (32 bytes)
-RamDiskSTRIP1:
-    ds $20,0
-;----------------------------------------------------------------------
-
 ;The catalogue can occupy addresses $C000-$EBFF in physical RAM bank 7,
 ;starting at $EBFF and growing downwards.
 

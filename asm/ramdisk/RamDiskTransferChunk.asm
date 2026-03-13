@@ -15,7 +15,7 @@ nextwrite:
 local nextwrite:
     ld a,b
     or c
-    ret z          ; no more remaining bytes
+    ret z                               ; no more remaining bytes
 
     call RamDiskWriteShadowedBytes      ; source bytes above $c000 are transferred using a buffer
     call updatevars

@@ -23,6 +23,17 @@ PROC
     pop de                                  ; de = destination ram disk address 
     pop hl                                  ; hl = main memory source address
 
+    ld a,b
+    xor c
+    jr nz,copybytes
+
+    xor a                                   ; all bytes > $c000
+    ld h,a
+    ld l,a
+    ret
+
+copybytes:
+local copybytes:
     push bc                                 ; save non shadowed byte count for return
 
     call RamDiskBankSwitchToAddress ; switch ramdisk bank into upper memory

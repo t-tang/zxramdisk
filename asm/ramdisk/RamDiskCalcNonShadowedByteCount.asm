@@ -6,26 +6,47 @@
 ;--------------------------------------------------
 RamDiskCalcNonShadowedByteCount
 PROC
-    push hl         ; save the source address
-    add hl,bc       ; find the end of the source data
-    dec hl
 
     ld a,$c0
-    cp h            ; does the source range extend into $c000?
-    jr c, partial
-    jr z, partial
+    cp h            ; check starting source address is below $c000
+    jr c,allabovec0
+    jr z,allabovec0
 
+    push hl
+
+    add hl,bc
+    dec hl          ; hl = end source address
+
+    ld a,$c0
+    cp h            ; check end source address is below $c000
+    jr c,allbelowc0
+    jr nz,allbelowc0
+
+; start address < $c000 and end address >= $c000
+; calculate how many bytes below $c000
+    pop hl          ; hl = source address
+    ex de,hl        ; de = start address
+    or a            ; clear carry flag
+    ld hl,$c000
+    sbc hl,de
+
+    ret
+
+allbelowc0:
+local allbelowc0:
     pop hl          ; clean up stack
-    ld h,b
-    ld l,c          ; there is no overlap into $c000
+    ld h,b          ; all source bytes are below $c0000
+    ld l,c          ; copy all bytes
+    ret
+
+allabovec0:
+local allabovec0:
+    xor a
+    ld h,0          ; all bytes are above $c000
+    ld l,0          ; don't copy any bytes
     ret
 
 partial:
 local partial:
 ; the source range extends into $c000, copy the range below $c000
-    pop de          ; de = source address
-    ld hl,$c000
-    or a            ; clear carry flag
-    sbc hl,de       ; return number of bytes below $c000
-    ret
 ENDP

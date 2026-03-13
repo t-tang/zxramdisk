@@ -10,20 +10,6 @@ cls
 Const RamDiskBank0 as UBYTE = $00
 Const RegularMemory as UBYTE = $05
 
-Sub Fastcall RamDiskTransfer(sourceAddress as uinteger, ramDiskAddress as uinteger, bytesLen as uinteger)
-Asm
-End Asm
-PROC
-                ; hl = source address
-    pop af      ; return address to ZX Basic
-    pop de      ; de = ram disk address
-    pop bc      ; bc = remaining bytes 
-    push af     ; restore return address
-
- 
-ENDP
-End Sub
-
 Sub RamDiskWrite(sourceAddress as uinteger, ramDiskAddress as uinteger, bytesLen as uinteger)
     dim bytesUsed as uinteger
     while bytesLen > 0

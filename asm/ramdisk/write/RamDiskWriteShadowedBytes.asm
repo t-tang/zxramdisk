@@ -29,14 +29,14 @@ local transferbuffer:
     push bc             ; save byte count for return
     push bc             ; save byte count for transfer to ram disk
     push de             ; save ram disk address
-    ld de,buffer        ; de = buffer
+    ld de,bytesbuffer   ; de = buffer
     ldir                ; transfer bytes from main memory to buffer
 
     pop de                          ; recover ram disk address
     pop bc                          ; recover byte count
     call RamDiskBankSwitchToAddress ; switch ramdisk bank into upper memory
     call RamDiskRebaseAddress       ; rebase ram disk address into upper memory 
-    ld hl,buffer
+    ld hl,bytesbuffer
     ldir                            ; transfer bytes from main memory to buffer
 
     ld a,5
@@ -46,7 +46,7 @@ local transferbuffer:
 
     ret
 
-buffer:
-local buffer:
+bytesbuffer:
+local bytesbuffer:
     ds BUFFER_SIZE,0
 ENDP
