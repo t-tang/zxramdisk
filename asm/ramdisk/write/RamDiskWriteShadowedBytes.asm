@@ -12,7 +12,6 @@ PROC
     local BUFFER_SIZE
 
 RamDiskWriteShadowedBytes:
-
     push hl             ; save source address
     ld hl,BUFFER_SIZE   ;
     or a                ; clear carry flag
@@ -28,7 +27,7 @@ local transferbuffer:
 
     pop hl              ; recover source address
     push bc             ; save byte count for return
-    push bc             ; save byte count transfer to ram disk
+    push bc             ; save byte count for transfer to ram disk
     push de             ; save ram disk address
     ld de,buffer        ; de = buffer
     ldir                ; transfer bytes from main memory to buffer

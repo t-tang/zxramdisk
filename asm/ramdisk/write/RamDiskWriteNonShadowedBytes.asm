@@ -8,20 +8,30 @@ PROC
 ;--------------------------------------------------------------
 ; in : hl = source address
 ; in : de = ramdisk linear destination address
-; in : bc = bytes count to transfer
+; in : bc = remaining byte count
 ; out: hl = number of bytes transferred
 ;--------------------------------------------------------------
-    ; assert logical bank 5 is mapped to upper memory (phys 0)
-    ; assert hl + bc does not straddle memory banks
+; assert logical bank 5 is mapped to upper memory (phys 0)
+
+    push hl                                 ; save main memory source address
+    push de                                 ; save destination ram disk address
+
+    call RamDiskCalcNonShadowedByteCount    ; hl = non shadowed byte count
+    ld b,h
+    ld c,l                                  ; bc = non shadowed byte count
+
+    pop de                                  ; de = destination ram disk address 
+    pop hl                                  ; hl = main memory source address
+
+    push bc                                 ; save non shadowed byte count for return
 
     call RamDiskBankSwitchToAddress ; switch ramdisk bank into upper memory
     call RamDiskRebaseAddress       ; rebase ram disk address into upper memory 
-    push bc                         ; save byte count for return
     ldir                            ; copy bytes to ramdisk
 
     ld a,5
     call RamDiskBankSwitch  ; restore memory bank layout
-    pop hl                  ; return byte count
+    pop hl                  ; return bytes copied
     ret
 
 ENDP

@@ -22,7 +22,7 @@ Sub CheckResult(actualResult as uinteger, expectedResult as uinteger, testDesc a
     print42(tmpStr) 
 End Sub
 
-Sub CheckTransfer(sourceAddress as uinteger, ramdiskAddress as uinteger, byteCount as uinteger, testDesc as string)
+Sub CheckTransfer(byteCount as uinteger, sourceAddress as uinteger, ramdiskAddress as uinteger, testDesc as string)
 
     dim srcXorCheck, srcSumCheck, aByte as ubyte
     for i = 0 to byteCount - 1

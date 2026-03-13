@@ -1,22 +1,14 @@
 ;--------------------------------------------------
-; in : hl = source address
-; in : de = ram disk address
-; in : bc = remaining bytes to be transferred
-; out: hl = how many bytes were copied into the ram disk
+; in  : hl = source address
+; in  : de = ram disk address
+; in  : bc = remaining bytes to be transferred
+; keep: no registers preserved
 ; copies data from source address into a bank
 ;--------------------------------------------------
 RamDiskTransferChunk:
 PROC
-    ld (sourceaddress),hl
-
-    ex de,hl
-    ld (ramDiskAddress),hl
-
-    ld h,b
-    ld l,c
-    ld (bytesremaining),hl
-
-    call RamDiskCalcNonShadowedByteCount   ; write all source bytes below $c000 efficiently
+    call savevars
+    call RamDiskWriteNonShadowedBytes   ; write all source bytes below $c000 efficiently
     call updatevars
 
 nextwrite:
@@ -30,10 +22,31 @@ local nextwrite:
     jr nextwrite
 
 ;---------------------------------------------
+; in  : hl = source address
+; in  : de = ram disk address
+; in  : bc = remaining byte count to be copie
+; keep: bc,de,hl preserved
+;---------------------------------------------
+savevars:
+local savevars:
+    push hl         ; save hl for caller convenience
+    ld (sourceaddress),hl
+
+    ex de,hl
+    ld (ramDiskAddress),hl
+    ex de,hl
+
+    ld h,b
+    ld l,c
+    ld (bytesremaining),hl
+    pop hl          ; restore hl for caller
+    ret
+
+;---------------------------------------------
 ; in  : hl = bytes copied
 ; out : hl = updated source address
 ; out : de = updated ram disk address
-; out : bc = updated remaining bytes
+; out : bc = updated remaining byte count
 ;---------------------------------------------
 updatevars:
 local updatevars:
@@ -44,6 +57,7 @@ local updatevars:
     ld hl,(sourceaddress)
     add hl,bc
     ld (sourceaddress),hl
+
     push hl                     ; save source address
 
     ld hl,(ramDiskAddress)
@@ -58,7 +72,8 @@ local updatevars:
     ld b,h
     ld c,l                      ; bc = remaining bytes
 
-    pop hl                      ; hl = source address
+    pop hl                      ; retrieve source address
+
     ret
 
 sourceaddress:
