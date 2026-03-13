@@ -1,6 +1,12 @@
 #include<hex.bas>
 #include"sys/print42.bas"
+#include"HasMemoryBanks.bas"
 #include"Tests.bas"
+
+If Not HasMemoryBanks() Then
+    Print "No memory banks found"
+    Stop
+End If
 
 Dim someData($20) as ubyte
 for i = 0 to $20 - 1: someData(i) = i: next
