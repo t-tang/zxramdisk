@@ -4,6 +4,13 @@
 ' $0c start address in ramdisk 2 bytes
 '--------------------------------------------------------------
 
+Sub Dummy()
+Asm
+    #include "asm/ramdisk/RamDiskBankSwitchToAddress.asm"
+    #include "asm/ramdisk/RamDiskRebaseAddress.asm"
+End Asm
+ENd Sub
+
 Function Fastcall RamDiskNextChunk(ramdiskAddress as uinteger, remainingBytes as uinteger) as uinteger
 Asm
                     ; hl = ramdiskAddress (linear)

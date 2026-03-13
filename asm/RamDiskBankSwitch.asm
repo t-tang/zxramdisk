@@ -2,13 +2,15 @@
 #define __LIBRARY_RAMDISK_BANKSWITCH_ASM__
 ;---------------------------------------------
 ; in   : a = logical bank
-; keep : de,hl
+; keep : bc,de,hl
 ;---------------------------------------------
 RamDiskBankSwitch
 PROC
 
     RAMDISK_BANK_M equ $5B5C 
     local RAMDISK_BANK_M
+
+    push bc            ; save bc for convenience of callers
 
     ld bc,logicalbanks ; mapping from logical to physical banks
     add a,c            ; look up the physical bank
@@ -28,6 +30,8 @@ local setphysicalbank:
     ld (RAMDISK_BANK_M),a   ; store new bank
     out (c),a               ; switch bank
     ei                      ; enable interrupts - todo: restore instead of assuming
+
+    pop bc                  ; restore bc to caller
     ret
 
 ;----------------------------------------------
