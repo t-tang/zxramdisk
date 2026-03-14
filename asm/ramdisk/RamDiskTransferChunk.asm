@@ -15,11 +15,16 @@ nextwrite:
 local nextwrite:
     ld a,b
     or c
-    ret z                               ; no more remaining bytes
+    jr z,endproc                        ; no more remaining bytes
 
     call RamDiskWriteShadowedBytes      ; source bytes above $c000 are transferred using a buffer
     call updatevars
     jr nextwrite
+
+endproc:
+local endproc:
+    ld hl,(bytestransferred)
+    ret
 
 ;---------------------------------------------
 ; in  : hl = source address
@@ -39,6 +44,10 @@ local savevars:
     ld h,b
     ld l,c
     ld (bytesremaining),hl
+
+    ld hl,$0000
+    ld (bytestransferred),hl
+
     pop hl          ; restore hl for caller
     ret
 
@@ -65,6 +74,10 @@ local updatevars:
     ld (ramDiskAddress),hl
     ex de,hl                    ; de = ram disk address
 
+    ld hl,(bytestransferred)
+    add hl,bc
+    ld (bytestransferred),hl
+
     ld hl,(bytesremaining)
     or a
     sbc hl,bc
@@ -86,5 +99,9 @@ local ramDiskAddress:
 
 bytesremaining:
 local bytesremaining:
+    dw $0000
+
+bytestransferred:
+local bytestransferred:
     dw $0000
 ENDP
