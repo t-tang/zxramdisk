@@ -39,11 +39,11 @@ local spillsover:
     rrca        ; a = msb of next bank
     ld h,a
     ld l,$00
-    dec hl      ; end address of current bank
+    dec hl      ; hl = end address of current bank
+
     pop de      ; de = start address in ram disk
     or a        ; clear carry flag
-
     sbc hl,de   ; hl = number of bytes living in this bank
-    inc hl      ; number of bytes spilled over from this bank
+    inc hl      ;
     ret
 ENDP
