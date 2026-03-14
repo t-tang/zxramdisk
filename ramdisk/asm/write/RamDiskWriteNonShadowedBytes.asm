@@ -25,24 +25,24 @@ PROC
 
     ld a,b
     xor c
-    jr nz,copybytes
+    jr nz,copybytes                         ; are there any bytes to copy?
 
-    xor a                                   ; all bytes > $c000
+    xor a                                   ; all source bytes > $c000
     ld h,a
     ld l,a
-    ret
+    ret                                     ; tell caller no bytes were transferred
 
 copybytes:
 local copybytes:
-    push bc                                 ; save non shadowed byte count for return
+    push bc                         ; save non shadowed byte count for return
 
     call RamDiskBankSwitchToAddress ; switch ramdisk bank into upper memory
     call RamDiskRebaseAddress       ; rebase ram disk address into upper memory 
     ldir                            ; copy bytes to ramdisk
 
     ld a,5
-    call RamDiskBankSwitch  ; restore memory bank layout
-    pop hl                  ; return bytes copied
+    call RamDiskBankSwitch          ; restore memory bank layout
+    pop hl                          ; return bytes copied
     ret
 
 ENDP

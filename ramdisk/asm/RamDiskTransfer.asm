@@ -26,7 +26,7 @@ local nextChunk:
     ld hl,(ramDiskAddress)      
     ex de,hl                    ; de = ram disk address
     ld hl,(sourceaddress)       ; hl = source address
-    call RamDiskTransferChunk   ; transfer bytes, bc = bytes transferred
+    call RamDiskWriteChunk      ; transfer bytes, bc = bytes transferred
     call updatevars
 
     ld a,b

@@ -5,7 +5,7 @@
 ; keep: no registers preserved
 ; copies data from source address into a bank
 ;--------------------------------------------------
-RamDiskTransferChunk:
+RamDiskWriteChunk:
 PROC
     call initchunkvars
     call RamDiskWriteNonShadowedBytes   ; write all source bytes below $c000 efficiently
