@@ -7,6 +7,7 @@
 ;--------------------------------------------------
 RamDiskTransfer:
 ; save registers to variables area
+    push hl
     ld (sourceaddress),hl   ; save source address
 
     ex de,hl
@@ -15,6 +16,7 @@ RamDiskTransfer:
     ld h,b
     ld l,c
     ld (bytesremaining),hl  ; save remaining byte count
+    pop hl
 
 nextChunk:
 local nextChunk:

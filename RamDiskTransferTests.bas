@@ -42,3 +42,8 @@ RamDiskTransferChunk($BFFE,$0000,$0022): CheckTransfer($BFFE, $0000, $0022, "Tra
 RamDiskTransferChunk($BFFE,$0001,$0036): CheckTransfer($BFFE, $0001, $0036, "Transfer Chunk")    '2 source bytes below $c000, remaining > buffer size
 RamDiskTransferChunk($C101,$0000,$0020): CheckTransfer($C101, $0000, $0020, "Transfer Chunk")    'all source bytes above $c000
 RamDiskTransferChunk($BFFE,$0000,$0103): CheckTransfer($BFFE, $0000, $0103, "Transfer Chunk")
+
+'This routine transfers data across banks boundaries
+RamDiskTransfer($C000,$4800,$0400): CheckTransfer($C000, $4800, $0400, "Transfer")
+RamDiskTransfer($BFFE,$4800,$0400): CheckTransfer($BFFE, $4800, $0400, "Transfer")
+
