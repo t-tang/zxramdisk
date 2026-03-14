@@ -20,14 +20,14 @@ CheckResult(RamDiskCalcNonShadowedByteCount($BFFF,$10), $0001, "Calc Non Shadowe
 
 'This routine calculates the number of source bytes below $c000
 'This routine copies source bytes below $c000 in to ram disk
-CheckTransfer(RamDiskWriteNonShadowedBytes(@someData(0),$0000,$20),@someData(0),$0000,"Write Non Shadowed Bytes")
-CheckTransfer(RamDiskWriteNonShadowedBytes($0000,$0000,$200),$0000,$0000,"Write Non Shadowed Bytes")
+RamDiskWriteNonShadowedBytes(@someData(0),$0000,$20): CheckTransfer(@someData(0),$0000,$0020,"Write Non Shadowed Bytes")
+RamDiskWriteNonShadowedBytes($0000,$0000,$0200): CheckTransfer($0000,$0000,$0200,"Write Non Shadowed Bytes")
 
 'This routine uses a buffer to copy source bytes above $c000
 CheckResult  (RamDiskWriteShadowedBytes($C000,$4000,$001F),$001F,"Write Shadowed Bytes")        'remaining < buffer size
 CheckResult  (RamDiskWriteShadowedBytes($C000,$4000,$0020),$0020,"Write Shadowed Bytes")        'remaining = buffer size
 CheckResult  (RamDiskWriteShadowedBytes($C000,$4000,$0021),$0020,"Write Shadowed Bytes")        'remaining > buffer size
-CheckTransfer(RamDiskWriteShadowedBytes($C100,$0000,$0020),$C100,$0000,"Write Shadowed Bytes")
+RamDiskWriteShadowedBytes($C100,$0000,$0020): CheckTransfer($C100,$0000,$0020,"Write Shadowed Bytes")
 
 'This routine splits the source bytes into chunks which all fit inside a bank
 'Simplifies downstream routines because they don't need to worry about bank boundaries
@@ -37,8 +37,8 @@ CheckResult(RamDiskNextChunk($0000,$4100), $4000,"Next Chunk")
 CheckResult(RamDiskNextChunk($1000,$4100), $3000,"Next Chunk")
 
 'This routine copies source bytes into the ram disk bank indicated by ram disk start address
-RamDiskTransferChunk($1000,$0000,$0200): CheckTransfer($0200, $1000, $0000, "Transfer Chunk")    'all source bytes below $c000
-RamDiskTransferChunk($BFFE,$0000,$0022): CheckTransfer($0022, $BFFE, $0000, "Transfer Chunk")    '2 source bytes below $c000, remaining = buffer size
-RamDiskTransferChunk($BFFE,$0001,$0036): CheckTransfer($0036, $BFFE, $0001, "Transfer Chunk")    '2 source bytes below $c000, remaining > buffer size
-RamDiskTransferChunk($C101,$0000,$0020): CheckTransfer($0020, $C101, $0000, "Transfer Chunk")    'all source bytes above $c000
-RamDiskTransferChunk($BFFE,$0000,$0103): CheckTransfer($0103, $BFFE, $0000, "Transfer Chunk")
+RamDiskTransferChunk($1000,$0000,$0200): CheckTransfer($1000, $0000, $0200, "Transfer Chunk")    'all source bytes below $c000
+RamDiskTransferChunk($BFFE,$0000,$0022): CheckTransfer($BFFE, $0000, $0022, "Transfer Chunk")    '2 source bytes below $c000, remaining = buffer size
+RamDiskTransferChunk($BFFE,$0001,$0036): CheckTransfer($BFFE, $0001, $0036, "Transfer Chunk")    '2 source bytes below $c000, remaining > buffer size
+RamDiskTransferChunk($C101,$0000,$0020): CheckTransfer($C101, $0000, $0020, "Transfer Chunk")    'all source bytes above $c000
+RamDiskTransferChunk($BFFE,$0000,$0103): CheckTransfer($BFFE, $0000, $0103, "Transfer Chunk")
