@@ -1,4 +1,4 @@
-#include"../../RamDiskBankSwitch.asm"
+#include"../RamDiskBankSwitch.asm"
 #include"../RamDiskBankSwitchToAddress.asm"
 #include"../RamDiskRebaseAddress.asm"
 

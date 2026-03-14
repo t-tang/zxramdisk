@@ -1,7 +1,11 @@
 #include<hex.bas>
-#include"sys/print42.bas"
-#include"HasMemoryBanks.bas"
-#include"Tests.bas"
+#include"../sys/print42.bas"
+#include"../sys/HasMemoryBanks.bas"
+#include"../ramdisk/bas/RamDiskTransfer.bas"
+
+#include"TestUtils.bas"
+
+cls
 
 If Not HasMemoryBanks() Then
     Print "No memory banks found"

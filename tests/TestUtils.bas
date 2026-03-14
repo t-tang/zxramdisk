@@ -1,13 +1,10 @@
 #include<hex.bas>
-#include"sys/print42.bas"
-#include"sys/RamDiskBankSwitch.bas"
-#include"RamDiskTransfer.bas"
+#include"../sys/print42.bas"
 
 DATA 0,0,4,8,80,32,0,0
 DATA 0,68,40,16,40,68,0,0
 
 dim n as ubyte : for i = usr "a" to usr "a" + 15: read n: poke i,n: next
-cls
 
 Dim tmpStr as string
 Sub CheckResult(actualResult as uinteger, expectedResult as uinteger, testDesc as string)

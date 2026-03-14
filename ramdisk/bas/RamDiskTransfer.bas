@@ -6,10 +6,16 @@
 
 Sub Dummy()
 Asm
-    #include "asm/ramdisk/RamDiskBankSwitchToAddress.asm"
-    #include "asm/ramdisk/RamDiskRebaseAddress.asm"
+    #include "../asm/RamDiskBankSwitchToAddress.asm"
+    #include "../asm/RamDiskRebaseAddress.asm"
 End Asm
-ENd Sub
+End Sub
+
+Sub Fastcall RamDiskBankSwitch(logicalbanknum as ubyte)
+Asm
+    #include "../asm/RamDiskBankSwitch.asm"
+End Asm
+End Sub
 
 Function Fastcall RamDiskNextChunk(ramdiskAddress as uinteger, remainingBytes as uinteger) as uinteger
 Asm
@@ -18,7 +24,7 @@ Asm
     pop bc          ; bc = remaining bytes
     push af         ; restore return address
 
-    #include"asm/ramdisk/RamDiskNextChunk.asm"
+    #include"../asm/RamDiskNextChunk.asm"
 End Asm
 End Function
 
@@ -30,7 +36,7 @@ PROC
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
 
-    #include"asm/ramdisk/RamDiskCalcNonShadowedByteCount.asm"
+    #include"../asm/RamDiskCalcNonShadowedByteCount.asm"
 ENDP
 End Asm
 End Function
@@ -44,7 +50,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/ramdisk/write/RamDiskWriteShadowedBytes.asm"
+    #include"../asm/write/RamDiskWriteShadowedBytes.asm"
 ENDP
 End Asm
 End Function
@@ -57,7 +63,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/ramdisk/write/RamDiskWriteNonShadowedBytes.asm"
+    #include"../asm/write/RamDiskWriteNonShadowedBytes.asm"
 ENDP
 End Asm
 End Function
@@ -72,7 +78,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/ramdisk/RamDiskWriteChunk.asm"
+    #include"../asm/write/RamDiskWriteChunk.asm"
 ENDP
 End Asm
 End Function
@@ -86,7 +92,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/ramdisk/RamDiskTransfer.asm"
+    #include"../asm/RamDiskTransfer.asm"
 ENDP
 End Asm
 End Function
