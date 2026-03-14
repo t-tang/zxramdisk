@@ -87,6 +87,8 @@ updatechunkvars:
 
     ret
 
+;storage area used to track variables during transfer
+;shared by WriteChunk and ReadChunk
 chunksourceaddress:
 local chunksourceaddress:
     dw $0000

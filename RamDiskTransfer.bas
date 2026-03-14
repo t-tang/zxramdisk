@@ -35,7 +35,7 @@ ENDP
 End Asm
 End Function
 
-'buffered copy of source bytes above $c000 using a buffer
+'copy source bytes above $c000 using a buffer
 Function Fastcall RamDiskWriteShadowedBytes(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
 Asm
 PROC
@@ -64,7 +64,7 @@ End Function
 
 'Copies byteslen source bytes to ram disk address
 'Control loop for Write Non Shadow Bytes and Write Shadow Bytes
-Function Fastcall RamDiskTransferChunk(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
+Function Fastcall RamDiskWriteChunk(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
 Asm
 PROC
     ; hl = source address
@@ -72,7 +72,7 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"asm/ramdisk/RamDiskTransferChunk.asm"
+    #include"asm/ramdisk/RamDiskWriteChunk.asm"
 ENDP
 End Asm
 End Function
