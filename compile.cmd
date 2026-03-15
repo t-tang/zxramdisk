@@ -4,4 +4,4 @@ c:\portable\zx\zxbasic\zxbc.exe          ^
    --output-format=tap --autorun --BASIC ^
    -W160 -W170 -W190                     ^
    --debug-memory ^
-   tests/RamDiskTransferTests.bas
+   tests/RamDiskWriteTests.bas

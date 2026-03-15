@@ -1,4 +1,5 @@
 ;--------------------------------------------------
+; in : a  = disk write or read
 ; in : hl = source address
 ; in : de = ram disk address
 ; in : bc = remaining bytes to be transferred
@@ -6,6 +7,8 @@
 ;--------------------------------------------------
 RamDiskTransfer:
 ; save registers to variables area
+    ld (ramdiskreadorwrite),a
+
     ld (sourceaddress),hl   ; save source address
 
     ex de,hl
@@ -26,7 +29,7 @@ local nextChunk:
     ld hl,(ramDiskAddress)      
     ex de,hl                    ; de = ram disk address
     ld hl,(sourceaddress)       ; hl = source address
-    call RamDiskWriteChunk      ; transfer bytes, bc = bytes transferred
+    call RamDiskTransferChunk   ; transfer bytes, bc = bytes transferred
     call updatevars
 
     ld a,b
@@ -78,3 +81,6 @@ local ramDiskAddress:
 bytesremaining:
 local bytesremaining:
     dw $0000
+
+ramdiskreadorwrite:
+    db $00

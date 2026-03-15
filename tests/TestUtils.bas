@@ -19,21 +19,23 @@ Sub CheckResult(actualResult as uinteger, expectedResult as uinteger, testDesc a
     print42(tmpStr) 
 End Sub
 
-Sub CheckTransfer(sourceAddress as uinteger, ramdiskAddress as uinteger, byteCount as uinteger, testDesc as string)
-
+Function MainMemoryCheckSum(sourceAddress as uinteger, byteCount as uinteger) as uinteger
     dim srcXorCheck, srcSumCheck, aByte as ubyte
     for i = 0 to byteCount - 1
         aByte = peek(sourceAddress + i)
         srcXorCheck = srcXorCheck xor aByte
         srcSumCheck = srcSumCheck + aByte
     next
+    return srcXorCheck * 256 + srcSumCheck
+End Function
 
+Function RamDiskCheckSum(ramdiskAddress as uinteger, byteCount as uinteger) as uinteger
     'switch bank into upper memory
     dim memBank as ubyte = ramdiskAddress / $4000
     RamDiskBankSwitch(memBank)
     dim rebasedAddress as uinteger = (ramdiskAddress bAND %0011111111111111) + $c000
 
-    dim ramXorCheck, ramSumCheck as ubyte
+    dim ramXorCheck, ramSumCheck, aByte as ubyte
     for i = 0 to byteCount - 1
         aByte = peek(rebasedAddress + i)
         ramXorCheck = ramXorCheck xor aByte
@@ -42,7 +44,14 @@ Sub CheckTransfer(sourceAddress as uinteger, ramdiskAddress as uinteger, byteCou
 
     RamDiskBankSwitch($05)
 
-    CheckResult(srcXorCheck * 256 + srcSumCheck, ramXorCheck * 256 + ramSumCheck, testDesc)
+    return ramXorCheck * 256 + ramSumCheck
+End Function
+
+Sub CheckTransfer(sourceAddress as uinteger, ramdiskAddress as uinteger, byteCount as uinteger, testDesc as string)
+    dim mainMemoryChecksum as uinteger = MainMemoryCheckSum(sourceAddress,byteCount)
+    dim ramdiskChecksum as uinteger = RamDiskCheckSum(ramdiskAddress, byteCount)
+
+    CheckResult(mainMemoryChecksum, ramdiskChecksum, testDesc)
 
 End Sub
 

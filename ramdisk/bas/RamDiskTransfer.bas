@@ -55,7 +55,8 @@ ENDP
 End Asm
 End Function
 
-Function Fastcall RamDiskWriteNonShadowedBytes(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
+'copy source bytes above $c000 using a buffer
+Function Fastcall RamDiskReadShadowedBytes(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
 Asm
 PROC
     ; hl = source address
@@ -63,35 +64,52 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"../asm/write/RamDiskWriteNonShadowedBytes.asm"
+    #include"../asm/write/RamDiskReadShadowedBytes.asm"
 ENDP
 End Asm
 End Function
 
-'Copies byteslen source bytes to ram disk address
-'Control loop for Write Non Shadow Bytes and Write Shadow Bytes
-Function Fastcall RamDiskWriteChunk(sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
+Function Fastcall RamDiskTransferNonShadowedBytes(readOrWrite as ubyte, sourceAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
 Asm
 PROC
-    ; hl = source address
+    ld (ramdiskreadorwrite),a
     pop af          ; return address to ZX Basic
+    pop hl          ; hl = source address
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"../asm/write/RamDiskWriteChunk.asm"
+    #include"../asm/RamDiskTransferNonShadowedBytes.asm"
+ENDP
+End Asm
+End Function
+
+'Transfers bytesLen bytes between main memory and ram disk
+Function Fastcall RamDiskTransferChunk(readOrWrite as ubyte, mainmemoryAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
+Asm
+PROC
+    ld (ramdiskreadorwrite),a
+    pop af          ; return address to ZX Basic
+    pop hl          ; hl = source address
+    pop de          ; de = dest address in RamDisk (linear)
+    pop bc          ; bc = remaining bytes to be copied
+    push af         ; restore return address
+    #include"../asm/RamDiskTransferChunk.asm"
 ENDP
 End Asm
 End Function
 
 'Transfer bytes between main memory and ramdisk
-Function Fastcall RamDiskTransfer(sourceAddress as uinteger, ramdisktAddress as uinteger, bytesLen as uinteger) as uinteger
+Function Fastcall RamDiskTransfer(direction as ubyte, mainmemoryAddress as uinteger, ramdisktAddress as uinteger, bytesLen as uinteger) as uinteger
 Asm
 PROC
-    ; hl = source address
+    ex af,af'       ; save direction of transfer
     pop af          ; return address to ZX Basic
+    pop hl          ; hl = main memory address
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
+    ex af,af'       ; retrieve direction of transfer
+
     #include"../asm/RamDiskTransfer.asm"
 ENDP
 End Asm
