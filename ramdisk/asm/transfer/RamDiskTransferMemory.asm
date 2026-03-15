@@ -5,6 +5,9 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAMDISK_TRANSFER_MEMORY_ASM__
+#define __LIBRARY_RAMDISK_TRANSFER_MEMORY_ASM__
+
 ;--------------------------------------------------
 ; in : a  = disk write or read
 ; in : hl = source address
@@ -89,3 +92,4 @@ bytesremaining:
 local bytesremaining:
     dw $0000
 
+#endif

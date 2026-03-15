@@ -5,6 +5,9 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAMDISK_TRANSFER_NON_SHADOWED_BYTES_ASM__
+#define __LIBRARY_RAMDISK_TRANSFER_NON_SHADOWED_BYTES_ASM__
+
 #include"RamDiskBankSwitch.asm"
 #include"RamDiskBankSwitchToAddress.asm"
 #include"RamDiskRebaseAddress.asm"
@@ -59,3 +62,4 @@ local transfer:
     ret
 
 ENDP
+#endif

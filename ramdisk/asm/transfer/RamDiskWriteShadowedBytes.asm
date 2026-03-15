@@ -5,6 +5,9 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAMDISK_WRITE_SHADOWED_BYTES_ASM__
+#define __LIBRARY_RAMDISK_WRITE_SHADOWED_BYTES_ASM__
+
 ;--------------------------------------------------
 ; in : hl = ramdisk address
 ; in : bc = remaining bytes to be transferred
@@ -53,3 +56,4 @@ __RAMDISK_BUFFER_SIZE__ equ $20
 ramdiskbytesbuffer:
     ds __RAMDISK_BUFFER_SIZE__,0
 ENDP
+#endif

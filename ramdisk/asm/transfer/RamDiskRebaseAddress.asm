@@ -5,8 +5,8 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
-#ifndef __RAMDISK_REBASE_ADDRESS_ASM__
-#define __RAMDISK_REBASE_ADDRESS_ASM__
+#ifndef __LIBRARY_RAMDISK_REBASE_ADDRESS_ASM__
+#define __LIBRARY_RAMDISK_REBASE_ADDRESS_ASM__
 ;--------------------------------------------------
 ; in   : de = rebase ram disk address into $c000 range
 ; out  : de rebased

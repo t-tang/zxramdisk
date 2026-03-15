@@ -5,6 +5,9 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAM_DISK_READ_WRITE_ASM__
+#define __LIBRARY_RAM_DISK_READ_WRITE_ASM__
+
 #include"transfer/RamDiskTransferGlobalVars.asm"
 
 #include"transfer/RamDiskBankSwitch.asm"
@@ -21,3 +24,4 @@
 #include"transfer/RamDiskTransferChunk.asm"
 
 #include"transfer/RamDiskTransferMemory.asm"
+#endif

@@ -5,6 +5,9 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAMDISK_CALC_NON_SHADOWED_BYTE_COUNT_ASM__
+#define __LIBRARY_RAMDISK_CALC_NON_SHADOWED_BYTE_COUNT_ASM__
+
 ;--------------------------------------------------
 ; in  : hl = source address
 ; in  : bc = remaining bytes to be copied
@@ -56,3 +59,4 @@ partial:
 local partial:
 ; the source range extends into $c000, copy the range below $c000
 ENDP
+#endif

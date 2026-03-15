@@ -5,6 +5,9 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAMDISK_NEXT_CHUNK_ASM__
+#define __LIBRARY_RAMDISK_NEXT_CHUNK_ASM__
+
 ;--------------------------------------------------------------------------------
 ; in : hl = ramdisk address
 ; in : bc = remaining bytes to be transferred
@@ -54,3 +57,4 @@ local spillsover:
     inc hl      ;
     ret
 ENDP
+#endif

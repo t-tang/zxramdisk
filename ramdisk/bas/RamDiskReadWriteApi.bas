@@ -5,6 +5,8 @@
 ' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ' ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAMDISK_READ_WRITE_API__
+#define __LIBRARY_RAMDISK_READ_WRITE_API__
 Sub Fastcall RamDiskLoadCode()
 Asm
     ret
@@ -49,3 +51,4 @@ Asm
     jp RamDiskTransferMemory
 End Asm
 End Sub
+#endif

@@ -5,6 +5,9 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+#ifndef __LIBRARY_RAMDISK_READ_SHADOWED_BYTES_ASM__
+#define __LIBRARY_RAMDISK_READ_SHADOWED_BYTES_ASM__
+
 ;--------------------------------------------------
 ; in : hl = destination address in main memory
 ; in : de = ram disk address
@@ -54,3 +57,4 @@ local transferbuffer:
     ret
 
 ENDP
+#endif

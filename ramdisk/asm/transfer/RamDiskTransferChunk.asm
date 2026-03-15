@@ -4,6 +4,8 @@
 ; Copyleft (k) 2026
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
+#ifndef __LIBRARY_RAMDISK_TRANSFER_CHUNK_ASM__
+#define __LIBRARY_RAMDISK_TRANSFER_CHUNK_ASM__
 
 ;--------------------------------------------------
 ; in  : hl = main memory address
@@ -121,3 +123,4 @@ local chunkbytesremaining:
 chunkbytestransferred:
     dw $0000
 ENDP
+#endif
