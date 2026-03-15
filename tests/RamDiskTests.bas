@@ -5,7 +5,6 @@
 #include"RamDiskTestFns.bas"
 #include"TestUtils.bas"
 
-RamDiskLoadTestFns()
 cls
 
 If Not HasMemoryBanks() Then

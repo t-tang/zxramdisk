@@ -4,11 +4,14 @@
 ' $0c start address in ramdisk 2 bytes
 '--------------------------------------------------------------
 
-Sub RamDiskLoadTestFns()
+Sub Fastcall RamDiskLoadTestFns()
 Asm
+    ret
     #include "../ramdisk/asm/RamDiskReadWrite.asm"
 End Asm
 End Sub
+
+RamDiskLoadTestFns()
 
 Function Fastcall RamDiskNextChunk(ramdiskAddress as uinteger, remainingBytes as uinteger) as uinteger
 Asm
