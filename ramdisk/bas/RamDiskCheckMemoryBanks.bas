@@ -1,4 +1,4 @@
-Function HasMemoryBanks() as ubyte
+Function RamDiskCheckMemoryBanks() as ubyte
     RamDiskBankSwitch(0)
     poke $C000,$ff
     RamDiskBankSwitch(5)
@@ -6,5 +6,9 @@ Function HasMemoryBanks() as ubyte
     RamDiskBankSwitch(0)
     dim hasMemoryBanks as ubyte = peek($c000) = $ff
     RamDiskBankSwitch(5)
-    return hasMemoryBanks
+
+    If Not hasMemoryBanks Then
+        Print "Ram Disk requires a 128K Spectrum"
+        Stop
+    End If
 End Function
