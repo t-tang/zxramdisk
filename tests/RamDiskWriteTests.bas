@@ -1,3 +1,10 @@
+' ----------------------------------------------------------
+' This file is released under the MIT License
+'
+' Copyleft (k) 2026
+' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
+' ----------------------------------------------------------
+
 
 Dim someData($20) as ubyte
 for i = 0 to $20 - 1: someData(i) = i: next

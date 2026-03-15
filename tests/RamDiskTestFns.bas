@@ -1,3 +1,10 @@
+' ----------------------------------------------------------
+' This file is released under the MIT License
+'
+' Copyleft (k) 2026
+' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
+' ----------------------------------------------------------
+
 '--------------------------------------------------------------
 ' $00 filename 10 bytes
 ' $0a file length 2 bytes

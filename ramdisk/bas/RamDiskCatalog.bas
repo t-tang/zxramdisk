@@ -1,4 +1,11 @@
 
+' ----------------------------------------------------------
+' This file is released under the MIT License
+'
+' Copyleft (k) 2026
+' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
+' ----------------------------------------------------------
+
 Function Fastcall RamDiskWriteCatalogEntry(filename as string, filelen as uinteger) as uinteger
 Asm
     pop af      ; return address to ZX Basic
