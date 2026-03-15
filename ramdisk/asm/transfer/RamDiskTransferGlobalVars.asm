@@ -1,0 +1,2 @@
+ramdiskreadorwrite:
+    db $00

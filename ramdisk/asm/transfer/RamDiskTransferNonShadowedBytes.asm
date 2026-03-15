@@ -2,7 +2,7 @@
 #include"RamDiskBankSwitchToAddress.asm"
 #include"RamDiskRebaseAddress.asm"
 
-RamDiskWriteNonShadowedBytes:
+RamDiskTransferNonShadowedBytes:
 PROC
 
 ;--------------------------------------------------------------

@@ -1,16 +1,3 @@
-#include<hex.bas>
-#include"../sys/print42.bas"
-#include"../sys/HasMemoryBanks.bas"
-#include"../ramdisk/bas/RamDiskTransfer.bas"
-
-#include"TestUtils.bas"
-
-cls
-
-If Not HasMemoryBanks() Then
-    Print "No memory banks found"
-    Stop
-End If
 
 Dim someData($20) as ubyte
 for i = 0 to $20 - 1: someData(i) = i: next
@@ -48,5 +35,5 @@ RamDiskTransferChunk($00,$C101,$0000,$0020): CheckTransfer($C101, $0000, $0020, 
 RamDiskTransferChunk($00,$BFFE,$0000,$0103): CheckTransfer($BFFE, $0000, $0103, "Write Chunk")
 
 'This routine transfers data across banks boundaries
-RamDiskTransfer($00,$C000,$4800,$0400): CheckTransfer($C000, $4800, $0400, "Transfer")
-RamDiskTransfer($00,$BFFE,$4800,$0400): CheckTransfer($BFFE, $4800, $0400, "Transfer")
+RamDiskTransferMemory($00,$C000,$4800,$0400): CheckTransfer($C000, $4800, $0400, "Transfer Write")
+RamDiskTransferMemory($00,$BFFE,$4800,$0400): CheckTransfer($BFFE, $4800, $0400, "Transfer Write")

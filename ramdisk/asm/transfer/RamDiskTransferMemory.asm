@@ -5,7 +5,7 @@
 ; in : bc = remaining bytes to be transferred
 ; transfer data between main memory and the ram disk
 ;--------------------------------------------------
-RamDiskTransfer:
+RamDiskTransferMemory:
 ; save registers to variables area
     ld (ramdiskreadorwrite),a
 
@@ -82,5 +82,3 @@ bytesremaining:
 local bytesremaining:
     dw $0000
 
-ramdiskreadorwrite:
-    db $00

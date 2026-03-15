@@ -1,5 +1,3 @@
-#include"../RamDiskBankSwitchToAddress.asm"
-#include"../RamDiskRebaseAddress.asm"
 
 ;--------------------------------------------------
 ; in : hl = destination address in main memory

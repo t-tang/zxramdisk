@@ -8,7 +8,7 @@
 RamDiskTransferChunk:
 PROC
     call initchunkvars
-    call RamDiskWriteNonShadowedBytes   ; write all main memory bytes below $c000 efficiently
+    call RamDiskTransferNonShadowedBytes   ; write all main memory bytes below $c000 efficiently
     call updatechunkvars
 
 nextwrite:

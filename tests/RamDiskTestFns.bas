@@ -4,16 +4,9 @@
 ' $0c start address in ramdisk 2 bytes
 '--------------------------------------------------------------
 
-Sub Dummy()
+Sub RamDiskLoadTestFns()
 Asm
-    #include "../asm/RamDiskBankSwitchToAddress.asm"
-    #include "../asm/RamDiskRebaseAddress.asm"
-End Asm
-End Sub
-
-Sub Fastcall RamDiskBankSwitch(logicalbanknum as ubyte)
-Asm
-    #include "../asm/RamDiskBankSwitch.asm"
+    #include "../ramdisk/asm/RamDiskReadWrite.asm"
 End Asm
 End Sub
 
@@ -24,7 +17,8 @@ Asm
     pop bc          ; bc = remaining bytes
     push af         ; restore return address
 
-    #include"../asm/RamDiskNextChunk.asm"
+    call RamDiskNextChunk
+
 End Asm
 End Function
 
@@ -36,7 +30,8 @@ PROC
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
 
-    #include"../asm/RamDiskCalcNonShadowedByteCount.asm"
+    call RamDiskCalcNonShadowedByteCount
+
 ENDP
 End Asm
 End Function
@@ -50,7 +45,8 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"../asm/write/RamDiskWriteShadowedBytes.asm"
+
+    call RamDiskWriteShadowedBytes
 ENDP
 End Asm
 End Function
@@ -64,7 +60,8 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"../asm/write/RamDiskReadShadowedBytes.asm"
+
+    call RamDiskReadShadowedBytes
 ENDP
 End Asm
 End Function
@@ -78,7 +75,8 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"../asm/RamDiskTransferNonShadowedBytes.asm"
+
+    call RamDiskTransferNonShadowedBytes
 ENDP
 End Asm
 End Function
@@ -93,13 +91,14 @@ PROC
     pop de          ; de = dest address in RamDisk (linear)
     pop bc          ; bc = remaining bytes to be copied
     push af         ; restore return address
-    #include"../asm/RamDiskTransferChunk.asm"
+
+    call RamDiskTransferChunk
 ENDP
 End Asm
 End Function
 
 'Transfer bytes between main memory and ramdisk
-Function Fastcall RamDiskTransfer(direction as ubyte, mainmemoryAddress as uinteger, ramdisktAddress as uinteger, bytesLen as uinteger) as uinteger
+Function Fastcall RamDiskTransferMemory(direction as ubyte, mainmemoryAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger) as uinteger
 Asm
 PROC
     ex af,af'       ; save direction of transfer
@@ -110,7 +109,14 @@ PROC
     push af         ; restore return address
     ex af,af'       ; retrieve direction of transfer
 
-    #include"../asm/RamDiskTransfer.asm"
+    call RamDiskTransferMemory
+
 ENDP
 End Asm
 End Function
+
+Sub Fastcall RamDiskBankSwitch(logicalBank as ubyte)
+Asm
+    call RamDiskBankSwitch
+End Asm
+End Sub
