@@ -1,3 +1,10 @@
+; ----------------------------------------------------------
+; This file is released under the MIT License
+;
+; Copyleft (k) 2026
+; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
+; ----------------------------------------------------------
+
 #include"transfer/RamDiskTransferGlobalVars.asm"
 
 #include"transfer/RamDiskBankSwitch.asm"

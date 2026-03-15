@@ -1,3 +1,9 @@
+; ----------------------------------------------------------
+; This file is released under the MIT License
+;
+; Copyleft (k) 2026
+; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
+; ----------------------------------------------------------
 
 ;--------------------------------------------------
 ; in : hl = destination address in main memory

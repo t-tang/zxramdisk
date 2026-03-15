@@ -1,19 +1,14 @@
 #include<hex.bas>
 #include"../sys/print42.bas"
-#include"../sys/HasMemoryBanks.bas"
+#include"../ramdisk/bas/RamDiskCheckMemoryBanks.bas"
 
 #include"RamDiskTestFns.bas"
 #include"TestUtils.bas"
 
 cls
-
-If Not HasMemoryBanks() Then
-    Print "No memory banks found"
-    Stop
-End If
+RamDiskCheckMemoryBanks()
 
 #include"RamDiskWriteTests.bas"
 #include"RamDiskReadTests.bas"
 
-border 1
-pause 0
+border 1: pause 0
