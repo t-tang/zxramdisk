@@ -8,20 +8,20 @@
 #ifndef __LIBRARY_RAM_DISK_READ_WRITE_ASM__
 #define __LIBRARY_RAM_DISK_READ_WRITE_ASM__
 
-#include"transfer/RamDiskTransferGlobalVars.asm"
+#include"readwrite/RamDiskTransferGlobalVars.asm"
 
-#include"transfer/RamDiskBankSwitch.asm"
-#include"transfer/RamDiskRebaseAddress.asm"
-#include"transfer/RamDiskBankSwitchToAddress.asm"
+#include"readwrite/RamDiskBankSwitch.asm"
+#include"readwrite/RamDiskRebaseAddress.asm"
+#include"readwrite/RamDiskBankSwitchToAddress.asm"
 
-#include"transfer/RamDiskCalcNonShadowedByteCount.asm"
-#include"transfer/RamDiskTransferNonShadowedBytes.asm"
+#include"readwrite/RamDiskCalcNonShadowedByteCount.asm"
+#include"readwrite/RamDiskTransferNonShadowedBytes.asm"
 
-#include"transfer/RamDiskWriteShadowedBytes.asm"
-#include"transfer/RamDiskReadShadowedBytes.asm"
+#include"readwrite/RamDiskWriteShadowedBytes.asm"
+#include"readwrite/RamDiskReadShadowedBytes.asm"
 
-#include"transfer/RamDiskNextChunk.asm"
-#include"transfer/RamDiskTransferChunk.asm"
+#include"readwrite/RamDiskNextChunk.asm"
+#include"readwrite/RamDiskTransferChunk.asm"
 
-#include"transfer/RamDiskTransferMemory.asm"
+#include"readwrite/RamDiskTransferMemory.asm"
 #endif
