@@ -65,6 +65,13 @@ local copyfileptr:
 
     ld (hl),b                   ; copy msb length
 
+; advance the free ptr
+    ld hl,(RamDiskFreeCatalogEntryPtr)
+    ld de,RamDiskCatalogEntrySize
+    or a
+    sbc hl,de
+    ld (RamDiskFreeCatalogEntryPtr),hl
+
     ret
 ENDP
 #endif

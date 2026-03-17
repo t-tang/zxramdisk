@@ -40,31 +40,38 @@ Asm
 End Asm
 End Sub
 
-Function Fastcall RamDiskCatalogGetFileName(idx as uinteger) as string
-    Dim buffer as string = "0123456789"
+Function Fastcall RamDiskCatalogGetEntry(idx as uinteger) as uinteger
+Asm
+    ; hl = catalog index number
+    jp RamDiskCatalogGetEntry  ; hl = filename address in catalog
+End Asm
+End Function
+
+Function RamDiskCatalogGetFileName(idx as uinteger) as string
+    Dim buffer as string = "0123456789" ' allocate buffer in ZX Basic
     RamDiskCatalogGetFileNameWithBuffer(idx, buffer)
-    return buffer
+    Return buffer
 End Function
 
 Sub Fastcall RamDiskCatalogGetFileNameWithBuffer(idx as uinteger, byref buffer as string)
 Asm
-                ; hl = catalog entry number
+                                ; hl = catalog entry number
+    call RamDiskCatalogGetEntry ; hl = filename address in catalog
+
     pop af
     pop de      ; de = buffer 
     push af
 
-    ex de,hl    ; hl = buffer ptr ptr, de = catalog index number
-    ld a,(hl)    ; derefence buffer ptr ptr
+    ex de,hl    ; hl = buffer ptr ptr, de = catalog entry address
+    ld a,(hl)   ; derefence buffer ptr ptr
     inc hl
     ld h,(hl)
     ld l,a      ; hl = buffer ptr
-    push hl     ; save the buffer ptr
     
-    ex de,hl
-    call RamDiskCatalogGetEntry  ; hl = filename address in catalog
+    ex de,hl    ; de buffer ptr, hl = catalog entry address
 
-    pop de      ; de = buffer address for ZX Basic string
     ld bc,$0C   ; max length of string + len
+    ld($0001),a
     ldir
 
 End Asm
@@ -96,14 +103,12 @@ Asm
 End Asm
 End Function
 
-Function Fastcall RamDiskCatalogGetFileSize(idx as uinteger) as uinteger
+Function RamDiskCatalogGetFileSize(idx as uinteger) as uinteger
     return RamDiskCatalogGet16(idx,$0e)
 End Function
 
-Function Fastcall RamDiskCatalogGetFilePtr(idx as uinteger) as uinteger
-Asm
+Function RamDiskCatalogGetFilePtr(idx as uinteger) as uinteger
     return RamDiskCatalogGet16(idx,$0c)
-End Asm
 End Function
 
 #endif
