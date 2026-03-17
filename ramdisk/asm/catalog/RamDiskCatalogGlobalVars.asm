@@ -19,7 +19,7 @@
 #ifndef __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 #define __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 
-RamDiskCatalogEntrySize equ $0F
+RamDiskCatalogEntrySize equ $10
 RamDiskCatalogFirstEntry equ $EBFF - RamDiskCatalogEntrySize
 
 ; ----------------------------------------------------------

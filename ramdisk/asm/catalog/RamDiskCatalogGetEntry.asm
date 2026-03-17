@@ -26,7 +26,9 @@ RamDiskCatalogGetEntry:
     add hl,hl       ; mult8
     add hl,hl       ; mult16
 
-    add hl,de       ; hl = address of catalog entry
+    ex de,hl
+    or a            ; clear carry flag
+    sbc hl,de       ; hl = address of catalog entry
     ret
 
 emptycatalog:
