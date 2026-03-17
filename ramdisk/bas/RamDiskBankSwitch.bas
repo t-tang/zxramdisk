@@ -5,8 +5,13 @@
 ' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ' ----------------------------------------------------------
 
-#include"../ramdisk/bas/RamDiskReadWriteApi.bas"
+#ifndef __LIBRARY_RAMDISK_BANK_SWITCH__
+#define __LIBRARY_RAMDISK_BANK_SWITCH__
 
-Load "Test.scr" Code $C000
-RamDiskWrite($C000,$C000,6912)
-RamDiskRead($4000,$C000,6912)
+Sub Fastcall RamDiskBankSwitch(logicalBank as ubyte)
+Asm
+    call RamDiskBankSwitch
+End Asm
+End Sub
+
+#endif

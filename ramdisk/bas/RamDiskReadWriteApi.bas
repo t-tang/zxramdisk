@@ -14,12 +14,6 @@ Asm
 End Asm
 End Sub
 
-Sub Fastcall RamDiskBankSwitch(logicalBank as ubyte)
-Asm
-    call RamDiskBankSwitch
-End Asm
-End Sub
-
 #include"RamDiskCheckMemoryBanks.bas"
 RamDiskLoadCode()
 RamDiskCheckMemoryBanks()

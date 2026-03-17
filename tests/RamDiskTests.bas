@@ -6,16 +6,16 @@
 ' ----------------------------------------------------------
 
 #include<hex.bas>
-#include"../sys/print42.bas"
 #include"../ramdisk/bas/RamDiskCheckMemoryBanks.bas"
 
-#include"RamDiskTestFns.bas"
-#include"TestUtils.bas"
+#include"src/util/RamDiskTestFns.bas"
+#include"src/util/TestUtils.bas"
 
 cls
 RamDiskCheckMemoryBanks()
 
-#include"RamDiskWriteTests.bas"
-#include"RamDiskReadTests.bas"
+#include"src/RamDiskWriteTests.bas"
+#include"src/RamDiskReadTests.bas"
 
-border 1: pause 0
+Border 1: Pause 0
+#include"src/RamDiskTestReadWriteApi.bas"

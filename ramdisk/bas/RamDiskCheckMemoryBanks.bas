@@ -8,6 +8,8 @@
 #ifndef __LIBRARY_RAMDISK_CHECK_MEMORY_BANKS__
 #define __LIBRARY_RAMDISK_CHECK_MEMORY_BANKS__
 
+#include"RamDiskBankSwitch.bas"
+
 Function RamDiskCheckMemoryBanks() as ubyte
     RamDiskBankSwitch(0)
     poke $C000,$ff

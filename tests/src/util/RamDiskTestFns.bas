@@ -6,15 +6,13 @@
 ' ----------------------------------------------------------
 
 '--------------------------------------------------------------
-' $00 filename 10 bytes
-' $0a file length 2 bytes
-' $0c start address in ramdisk 2 bytes
+' ZX Basic wrappers for the various low level assembly routines
 '--------------------------------------------------------------
 
 Sub Fastcall RamDiskLoadTestFns()
 Asm
     ret
-    #include "../ramdisk/asm/RamDiskReadWrite.asm"
+    #include "../../../ramdisk/asm/RamDiskReadWrite.asm"
 End Asm
 End Sub
 
@@ -124,9 +122,3 @@ PROC
 ENDP
 End Asm
 End Function
-
-Sub Fastcall RamDiskBankSwitch(logicalBank as ubyte)
-Asm
-    call RamDiskBankSwitch
-End Asm
-End Sub
