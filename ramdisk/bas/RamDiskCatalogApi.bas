@@ -11,6 +11,7 @@
 
 #ifndef __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__
 #define __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__
+#include<hex.bas>
 
 Sub Fastcall RamDiskCatalogLoadCode()
 Asm
@@ -24,6 +25,15 @@ End Sub
 #include"RamDiskCheckMemoryBanks.bas"
 RamDiskCatalogLoadCode()
 RamDiskCheckMemoryBanks()
+
+#ifdef __LIBRARY_RAMDISK_ZXBASIC_READ_WRITE_API__
+#include<print42.bas>
+Cls
+print42("You should choose either the"+chr(13))
+print42("Read-Write Api OR the Catalog Api"+chr(13)+chr(13))
+print42("Mixing the Apis can cause data corruption")
+Stop
+#endif
 
 Const ERR_OK                  as ubyte = D_ERR_OK
 Const ERR_OUT_OF_MEMORY       as ubyte = D_ERR_OUT_OF_MEMORY

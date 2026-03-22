@@ -22,6 +22,15 @@ End Sub
 RamDiskLoadCode()
 RamDiskCheckMemoryBanks()
 
+#ifdef __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__
+#include<print42.bas>
+Cls
+print42("You should choose either the"+chr(13))
+print42("Read-Write Api OR the Catalog Api"+chr(13)+chr(13))
+print42("Mixing the Apis can cause data corruption")
+Stop
+#endif
+
 'Transfer bytes from main memory to ramdisk
 Sub Fastcall RamDiskWrite(mainmemoryAddress as uinteger, ramdiskAddress as uinteger, bytesLen as uinteger)
 Asm
