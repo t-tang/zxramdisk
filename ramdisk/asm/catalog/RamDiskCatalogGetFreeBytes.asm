@@ -6,5 +6,11 @@
 ; ----------------------------------------------------------
 
 ; ----------------------------------------------------------
-; out: number of bytes available in Ram Disk
+; keep : bc
 ; ----------------------------------------------------------
+RamDiskCatalogGetFreeBytes:
+    ld de,(RamDiskCatalogFreeRamDiskAddress)
+    ld hl,$FFFF
+    xor a       ; clear carry flag
+    sbc hl,de
+    ret

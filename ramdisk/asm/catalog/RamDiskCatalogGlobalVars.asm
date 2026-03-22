@@ -19,6 +19,11 @@
 #ifndef __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 #define __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 
+#define D_ERR_OK                00
+#define D_ERR_OUT_OF_MEMORY     04
+#define D_ERR_INVALID_ARGUMENT  10
+#define D_ERR_INVALID_FILE_NAME 15
+
 RamDiskCatalogEntrySize  equ $10
 RamDiskCatalogStartAddr  equ $EBFF
 RamDiskCatalogFirstEntry equ RamDiskCatalogStartAddr - RamDiskCatalogEntrySize

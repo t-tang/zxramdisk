@@ -47,54 +47,25 @@ End Function
 
 Function Fastcall RamDiskCatalogGetFreeBytes() as uinteger
 Asm
-    ld de,(RamDiskCatalogFreeRamDiskAddress)
-    ld hl,$FFFF
-    xor a       ; clear carry flag
-    sbc hl,de
+    jp RamDiskCatalogGetFreeBytes
 End Asm
 End Function
 
-Sub Fastcall RamDiskCatalogWriteFile(filename as string, mainmemoryAddress as uinteger, bytesLen as uinteger)
+Const ERR_OK as ubyte = D_ERR_OK
+Const ERR_OUT_OF_MEMORY     as ubyte = D_ERR_OUT_OF_MEMORY
+Const ERR_INVALID_ARGUMENT  as ubyte = D_ERR_INVALID_ARGUMENT
+Const ERR_INVALID_FILE_NAME as ubyte = D_ERR_INVALID_FILE_NAME
+
+Function Fastcall RamDiskSave(filename as string, sourceAddress as uinteger, length as uinteger) as ubyte
 Asm
-                    ; hl = filename
-    pop af          ; return address to ZX Basic
-    pop de          ; de = main memory address
-    pop bc          ; bc = remaining bytes to be copied
+    pop af          ; ZX Basic return address
+    pop de          ; main memory source address
+    pop bc          ; number of bytes to transfer
     push af         ; restore return address
-
-    push hl         ; save file name
-    push bc         ; save bytes length
-
-    ld hl,(RamDiskCatalogFreeRamDiskAddress)
-    ex de,hl        ; hl = main memory address, de = ram disk address
-    xor a           ; a = 0, write to ramdisk
-    call RamDiskTransferMemory
-
-    pop bc          ; retrieve bytes length
-    pop de          ; retrieve file name
-    ld hl,(RamDiskCatalogFreeRamDiskAddress)
-    call RamDiskCatalogWriteIndexEntry
-
-    ld hl,(RamDiskCatalogFreeRamDiskAddress)
-    add hl,bc
-    ld(RamDiskCatalogFreeRamDiskAddress),hl     ; update free ram disk address
+    
+    jp RamDiskCatalogSaveFile
 
 End Asm
-End Sub
-
-Const ERR_OK as ubyte = 00
-Const ERR_OUT_OF_MEMORY     as ubyte = 04
-Const ERR_INVALID_ARGUMENT  as ubyte = 10
-Const ERR_INVALID_FILE_NAME as ubyte = 15
-
-Function RamDiskSave(filename as string, sourceAddress as uinteger, length as uinteger) as ubyte
-    If length = 0 Then Return ERR_INVALID_ARGUMENT
-    If Not Len(filename) Then Return ERR_INVALID_FILE_NAME
-    If RamDiskCatalogGetIndexSize() = 5 Then Return ERR_OUT_OF_MEMORY ' TODO: FIXME
-    If RamDiskCatalogGetFreeBytes() < length Then Return ERR_OUT_OF_MEMORY
-
-    RamDiskCatalogWriteFile(filename, sourceAddress,length)
-    return ERR_OK
 End Function
 
 Function Fastcall RamDiskLoad(filename as string, mainmemoryaddress as uinteger) as ubyte
@@ -104,36 +75,7 @@ Proc
     pop de      ; de = main memory address
     push af
 
-    push de     ; save main memory address
-
-    call RamDiskCatalogGetIndexPtr  ; hl = index entry ptr
-    ld a,h
-    or l
-    jr nz, loadfile                 ; filename was not found
-
-    pop af      ; drop main memory address
-    ld a,$0F    ; ERR_INVALID_FILE_NAME
-    ret
-    
-loadfile:
-local loadfile:
-    ld de,RamDiskCatalogRamDiskOffset
-    add hl,de   ; hl = ram disk address
-
-    ld e,(hl)   ; lsb ram disk address
-    inc hl
-    ld d,(hl)   ; de = ram disk address
-
-    inc hl      ; hl = file size
-    ld c,(hl)   ; lsb file size
-    
-    inc hl
-    ld b,(hl)   ; msb file size
-
-    pop hl      ; hl = main memory address
-    
-    ld a,$01    ; $01 = transfer from ram disk to main memory
-    jp RamDiskTransferMemory
+    jp RamDiskCatalogLoadFile
 EndP
 End Asm
 End Function
