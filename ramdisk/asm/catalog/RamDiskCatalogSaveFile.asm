@@ -94,6 +94,8 @@ local ramdiskcatalogwritefile:
     ld hl,(RamDiskCatalogFreeRamDiskAddress)
     add hl,bc
     ld(RamDiskCatalogFreeRamDiskAddress),hl     ; update free ram disk address
+    xor a
+    ld(hl),a    ; mark as unused
 
     ld a,D_ERR_OK
     ret

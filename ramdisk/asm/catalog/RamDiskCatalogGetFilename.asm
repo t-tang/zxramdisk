@@ -20,13 +20,20 @@ RamDiskCatalogGetFilename:
     push namespace core
     call __MEM_ALLOC        ; hl = heap ptr
     pop namespace
-                            ; TODO: check heap exhausted
+    ld a,h
+    or l
+    ret z                   ; check heap exhausted
+
     pop de                  ; de = catalog entry index
     push hl                 ; save heap ptr for return
-    push hl                 ; save heap ptr
     ex de,hl                ; hl = catalog entry index
     call RamDiskCatalogGetIndexEntry ; hl = filename address in catalog
     pop de                  ; de = heap ptr
+    ld a,h
+    or l                    ; index out of bounds
+    ret z
+
+    push de                 ; save heap ptr
     ld bc,$0c               ; filename is max 12 bytes
     ldir
     pop hl                  ; string ptr

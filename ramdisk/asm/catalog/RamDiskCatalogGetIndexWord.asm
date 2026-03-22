@@ -20,8 +20,8 @@ RamDiskCatalogGetIndexWord:
     ex af,af'                   ; save offset
     call RamDiskCatalogGetIndexEntry ; hl = address of catalog entry
     ld a,l
-    or h                        ; is the catalog empty?
-    ret z                       ; catalog is empty
+    or h                        ; is the index argument out of bounds?
+    ret z                       ; index argument is out of bounds
 
     xor a
     ld d,a

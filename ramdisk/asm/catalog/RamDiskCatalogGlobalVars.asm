@@ -26,7 +26,6 @@
 #define D_ERR_FILE_ALREADY_EXISTS $20
 #define D_ERR_FILE_DOES_NOT_EXIST $23
 
-
 RamDiskCatalogEntrySize  equ $10
 RamDiskCatalogStartAddr  equ $EBFF
 RamDiskCatalogFirstEntry equ RamDiskCatalogStartAddr - RamDiskCatalogEntrySize

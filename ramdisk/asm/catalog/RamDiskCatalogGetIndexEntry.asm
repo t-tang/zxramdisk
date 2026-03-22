@@ -14,14 +14,14 @@
 #define __LIBRARY_RAMDISK_CATEGORY_GET_ENTRY_ASM__
 
 #include"RamDiskCatalogGlobalVars.asm"
-RamDiskCatalogGetIndexEntry:
 
-    ; TODO: Verify catalog index entry actually exists
+Proc
+RamDiskCatalogGetIndexEntry:
 
     ld de,RamDiskCatalogFirstEntry
     ld a,(de)
     or a
-    jr z,emptycatalog
+    jr z,notfound   ; empty catalog
 
     add hl,hl       ; mult2
     add hl,hl       ; mult4
@@ -31,12 +31,19 @@ RamDiskCatalogGetIndexEntry:
     ex de,hl
     or a            ; clear carry flag
     sbc hl,de       ; hl = address of catalog entry
+
+    ex de,hl        ; de = address of catalog entry
+    ld hl,(RamDiskFreeCatalogEntryPtr)
+    sbc hl,de       ; RamDiskFreeCatalogPtr - index argument catalog ptr
+    jr nc,notfound  ; failed bounds check
+    ex de,hl        ; hl = index argument catalog ptr
     ret
 
-emptycatalog:
-local emptycatalog:
+notfound:
+local notfound:
     xor a
     ld h,a
     ld l,a
     ret
+EndP
 #endif

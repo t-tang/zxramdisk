@@ -42,7 +42,13 @@ CheckResult($4000, RamDiskCatalogGetRamDiskAddress($0001), "Ram Disk address is 
 
 Border 0 : Pause 250 : Cls : printat42(0,0)
 
+' ----------------------------------------------------------
+' Edge conditions
+' ----------------------------------------------------------
 CheckResult(ERR_FILE_ALREADY_EXISTS, RamDiskSave("foobar",$0000,$2000), "Duplicate file check")
+CheckResult($0000, RamDiskCatalogGetIndexEntry($FF), "Out of bounds index")
+CheckResult($0000, Len(RamDiskCatalogGetFilename($FF)), "Out of bounds filename")
+CheckResult($0000, RamDiskCatalogGetFileSize($FF), "Out of bounds file size")
 RamDiskCatalogWriteIndexEntry("loremipsumdolor",$E101,$F000)
 CheckString("loremipsum", RamDiskCatalogGetFilename($0002), "Long filename is truncated")
 CheckResult($EBDF, RamDiskCatalogGetIndexPtr("foobar"), "Find foobar in catalog")
