@@ -42,73 +42,33 @@ End Sub
 
 Function Fastcall RamDiskCatalogGetEntry(idx as uinteger) as uinteger
 Asm
-    ; hl = catalog index number
     jp RamDiskCatalogGetEntry  ; hl = filename address in catalog
 End Asm
 End Function
 
-Function RamDiskCatalogGetFileName(idx as uinteger) as string
-    Dim buffer as string = "0123456789" ' allocate buffer in ZX Basic
-    RamDiskCatalogGetFileNameWithBuffer(idx, buffer)
-    Return buffer
+Function Fastcall RamDiskCatalogGetFilename(idx as uinteger) as string
+Asm
+    call RamDiskCatalogGetFilename
+    ret
+End Asm
 End Function
 
-Sub Fastcall RamDiskCatalogGetFileNameWithBuffer(idx as uinteger, byref buffer as string)
-Asm
-                                ; hl = catalog entry number
-    call RamDiskCatalogGetEntry ; hl = filename address in catalog
-
-    pop af
-    pop de      ; de = buffer 
-    push af
-
-    ex de,hl    ; hl = buffer ptr ptr, de = catalog entry address
-    ld a,(hl)   ; derefence buffer ptr ptr
-    inc hl
-    ld h,(hl)
-    ld l,a      ; hl = buffer ptr
-    
-    ex de,hl    ; de buffer ptr, hl = catalog entry address
-
-    ld bc,$0C   ; max length of string + len
-    ld($0001),a
-    ldir
-
-End Asm
-End Sub
-
-Function Fastcall RamDiskCatalogGet16(idx as uinteger, offset as ubyte) as uinteger
+Function Fastcall RamDiskCatalogGetWord(idx as uinteger, offset as ubyte) as uinteger
 Asm
     pop bc
     pop af                      ; a = offset
     push bc
 
-                                ; hl = catalog entry index
-    ex af,af'                   ; save offset
-    call RamDiskCatalogGetEntry ; hl = address of catalog entry
-    ld a,l
-    or h                        ; is the catalog empty?
-    ret z                       ; catalog is empty
-
-    xor a
-    ld d,a
-    ex af,af'       ; retrieve offset
-    ld e,a
-    add hl,de       ; address of uint16 data
-
-    ld a,(hl)       ; grab lsb uint16
-    inc hl
-    ld h,(hl)       ; grab msb uint16
-    ld l,a          ; hl = file size
+    jp RamDiskCatalogGetWord
 End Asm
 End Function
 
 Function RamDiskCatalogGetFileSize(idx as uinteger) as uinteger
-    return RamDiskCatalogGet16(idx,$0e)
+    return RamDiskCatalogGetWord(idx,$0e)
 End Function
 
 Function RamDiskCatalogGetFilePtr(idx as uinteger) as uinteger
-    return RamDiskCatalogGet16(idx,$0c)
+    return RamDiskCatalogGetWord(idx,$0c)
 End Function
 
 #endif

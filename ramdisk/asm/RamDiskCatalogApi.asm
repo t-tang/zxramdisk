@@ -4,5 +4,7 @@
 #include"catalog/RamDiskCatalogGlobalVars.asm"
 #include"catalog/RamDiskCatalogWriteEntry.asm"
 #include"catalog/RamDiskCatalogGetEntry.asm"
+#include"catalog/RamDiskCatalogGetFilename.asm"
+#include"catalog/RamDiskCatalogGetWord.asm"
 
 #endif
