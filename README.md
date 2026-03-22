@@ -14,7 +14,7 @@ The Catalog Api is analgous to the original Load! and Save! commands
  * RamDiskFreeBytes()
  * RamDiskClear()
 
-#include"ramdisk/bas/RamDiskCatalogApi.bas" to use the read-write API
+#include"ramdisk/bas/RamDiskCatalogApi.bas" to use the Catalog API
 
 ### Read-Write Api
 
