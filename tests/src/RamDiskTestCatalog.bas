@@ -9,7 +9,9 @@
 #include"util/TestUtils.bas"
 #include"util/RamDiskCatalogTestFns.bas"
 Cls
+
 CheckResult($0000, RamDiskCatalogGetIndexSize(), "Initial index size is 0")
+CheckResult($000F, RamDiskLoad("helloworld",$0000), "Search empty catalog")
 CheckResult(ERR_INVALID_ARGUMENT, RamDiskSave("test", $0000, $0000), "Cannot save 0 bytes")
 CheckResult(ERR_INVALID_FILE_NAME, RamDiskSave("", $0000, $0010), "Cannot save empty filename")
 
@@ -44,5 +46,15 @@ CheckString("helloworld", RamDiskCatalogGetFilename($0000), "Filename is hellowo
 CheckString("foobar", RamDiskCatalogGetFilename($0001), "Filename is foobar (02)")
 RamDiskCatalogWriteIndexEntry("loremipsumdolor",$E101,$F000)
 CheckString("loremipsum", RamDiskCatalogGetFilename($0002), "Long filename is truncated")
+CheckResult($EBDF, RamDiskCatalogGetIndexEntryPtr("foobar"), "Find foobar in catalog")
+CheckResult($000F, RamDiskLoad("twasbrilig",$0000), "Load bad filename fails")
 
-stop
+Border 0 : Pause 0
+
+' ----------------------------------------------------------
+' Screen Test
+' ----------------------------------------------------------
+Load "Test2.scr" Code $C000
+RamDiskSave("Test2.scr",$C000,6912)
+RamDiskLoad("Test2.scr",$4000)
+Border 1

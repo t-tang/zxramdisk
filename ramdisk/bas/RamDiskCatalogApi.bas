@@ -54,6 +54,84 @@ Asm
 End Asm
 End Function
 
+Function Fastcall RamDiskCatalogGetIndexEntryPtr(filename as string) as uinteger
+Asm
+Proc
+RamDiskCatalogGetIndexEntryPtr:
+    push hl         ; save filename
+    call RamDiskCatalogGetIndexSize ; hl = number of catalog entries
+    ld a,h
+    or l
+    jr z,emptyindex ; empty catalog
+
+    ld b,h
+    ld c,l          ; bc = index size
+    ld hl,(RamDiskFreeCatalogEntryPtr)
+    ld de,RamDiskCatalogEntrySize
+    add hl,de       ; last index entry
+    pop de          ; de = filename
+
+nextindexentry:
+local nextindexentry:
+    push de
+    push hl
+    call stringequals
+    jr z,foundindexentry
+
+    pop hl      ; hl = index entry ptr
+    ld de,RamDiskCatalogEntrySize
+    jr z,foundindexentry
+    add hl,de   ; next index entry
+    pop de      ; retrieve filename
+
+    dec c
+    jr nz,nextindexentry
+
+    dec b
+    jr nz,nextindexentry
+    jr notfound
+
+emptyindex:
+local emptyindex:
+    pop af      ; drop filename
+notfound:
+local notfound:
+    xor a
+    ld h,a
+    ld l,a
+    ret
+
+foundindexentry:
+local foundindexentry:
+    pop hl      ; hl = index entry ptr
+    pop de      ; drop filename
+    ret
+
+stringequals:
+local stringequals:
+    ld a,(de)   ; lsb str len
+    cp (hl)
+    ret nz      ; str not equals
+
+    inc hl      ; msb str len
+    inc de
+    inc hl      ; skip msb str len
+    inc de
+
+nextchar:
+local nextchar:
+    ex af,af'   ; a' = str len
+    ld a,(de)   ; a = str char
+    cp (hl)
+    ret nz      ; str not equals
+    ex af,af'   ; a = str len
+    dec a
+    ret z
+    jr nextchar
+EndP
+End Asm
+End Function
+
 Sub Fastcall RamDiskCatalogWriteFile(filename as string, mainmemoryAddress as uinteger, bytesLen as uinteger)
 Asm
                     ; hl = filename
@@ -95,6 +173,47 @@ Function RamDiskSave(filename as string, sourceAddress as uinteger, length as ui
 
     RamDiskCatalogWriteFile(filename, sourceAddress,length)
     return ERR_OK
+End Function
+
+Function Fastcall RamDiskLoad(filename as string, mainmemoryaddress as uinteger) as ubyte
+Asm
+Proc
+    pop af
+    pop de      ; de = main memory address
+    push af
+
+    push de     ; save main memory address
+
+    call RamDiskCatalogGetIndexEntryPtr ; hl = index entry ptr
+    ld a,h
+    or l
+    jr nz, loadfile
+
+    pop af      ; drop main memory address
+    ld a,$0F     ; ERR_INVALID_FILE_NAME
+    ret
+    
+loadfile:
+local loadfile:
+    ld de,RamDiskCatalogRamDiskOffset
+    add hl,de   ; hl = ram disk address
+
+    ld e,(hl)   ; lsb ram disk address
+    inc hl
+    ld d,(hl)   ; de = ram disk address
+
+    inc hl      ; hl = file size
+    ld c,(hl)   ; lsb file size
+    
+    inc hl
+    ld b,(hl)   ; msb file size
+
+    pop hl      ; hl = main memory address
+    
+    ld a,$01    ; $01 = transfer from ram disk to main memory
+    jp RamDiskTransferMemory
+EndP
+End Asm
 End Function
 
 #endif
