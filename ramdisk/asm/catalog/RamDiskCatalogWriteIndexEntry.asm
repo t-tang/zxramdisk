@@ -15,7 +15,7 @@
 #ifndef __LIBRARY_RAMDISK_CATALOG_WRITE_ENTRY_ASM__
 #define __LIBRARY_RAMDISK_CATALOG_WRITE_ENTRY_ASM__
 
-RamDiskCatalogWriteEntry
+RamDiskCatalogWriteIndexEntry
 
 PROC
     ; assert BANK_M has bank 4 (phys  7) paged in 

@@ -13,7 +13,7 @@
 #ifndef __LIBRARY_RAMDISK_CATEGORY_GET_FILENAME_ASM__
 #define __LIBRARY_RAMDISK_CATEGORY_GET_FILENAME_ASM__
 
-#include"RamDiskCatalogGetEntry.asm"
+#include"RamDiskCatalogGetIndexEntry.asm"
 RamDiskCatalogGetFilename:
     push hl                 ; save index argument
     ld bc,$0c               ; filename is max 12 bytes
@@ -25,7 +25,7 @@ RamDiskCatalogGetFilename:
     push hl                 ; save heap ptr for return
     push hl                 ; save heap ptr
     ex de,hl                ; hl = catalog entry index
-    call RamDiskCatalogGetEntry ; hl = filename address in catalog
+    call RamDiskCatalogGetIndexEntry ; hl = filename address in catalog
     pop de                  ; de = heap ptr
     ld bc,$0c               ; filename is max 12 bytes
     ldir

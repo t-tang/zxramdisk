@@ -13,10 +13,10 @@
 #define __LIBRARY_RAMDISK_CATALOG_API_ASM__
 
 #include"catalog/RamDiskCatalogGlobalVars.asm"
-#include"catalog/RamDiskCatalogWriteEntry.asm"
-#include"catalog/RamDiskCatalogGetEntry.asm"
+#include"catalog/RamDiskCatalogWriteIndexEntry.asm"
+#include"catalog/RamDiskCatalogGetIndexEntry.asm"
 #include"catalog/RamDiskCatalogGetFilename.asm"
-#include"catalog/RamDiskCatalogGetWord.asm"
-#include"catalog/RamDiskCatalogGetSize.asm"
+#include"catalog/RamDiskCatalogGetIndexWord.asm"
+#include"catalog/RamDiskCatalogGetIndexSize.asm"
 
 #endif

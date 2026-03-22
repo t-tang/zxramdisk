@@ -15,7 +15,7 @@
 
 #include"RamDiskCatalogGlobalVars.asm"
 
-RamDiskCatalogGetSize:
+RamDiskCatalogGetIndexSize:
     ld de,(RamDiskFreeCatalogEntryPtr)
     ld hl,RamDiskCatalogStartAddr
     or a        ; clear carry flag

@@ -1,4 +1,3 @@
-
 ; ----------------------------------------------------------
 ; This file is released under the MIT License
 ;
@@ -14,12 +13,12 @@
 
 #ifndef __LIBRARY_RAMDISK_CATEGORY_GET_WORD_ASM__
 #define __LIBRARY_RAMDISK_CATEGORY_GET_WORD_ASM__
-#include"RamDiskCatalogGetEntry.asm"
-RamDiskCatalogGetWord:
+#include"RamDiskCatalogGetIndexEntry.asm"
+RamDiskCatalogGetIndexWord:
 
                                 ; hl = catalog entry index
     ex af,af'                   ; save offset
-    call RamDiskCatalogGetEntry ; hl = address of catalog entry
+    call RamDiskCatalogGetIndexEntry ; hl = address of catalog entry
     ld a,l
     or h                        ; is the catalog empty?
     ret z                       ; catalog is empty

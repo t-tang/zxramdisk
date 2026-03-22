@@ -29,6 +29,6 @@ RamDiskCatalogFileSizeOffset equ $0E
 ; ----------------------------------------------------------
 ; Catalog entries stored 
 ; ----------------------------------------------------------
-RamDiskFreeCatalogEntryPtr:
-dw RamDiskCatalogFirstEntry
+RamDiskFreeCatalogEntryPtr:        dw RamDiskCatalogFirstEntry
+RamDiskCatalogFreeRamDiskAddress:  dw $0000
 #endif

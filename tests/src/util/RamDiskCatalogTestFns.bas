@@ -11,7 +11,13 @@
 
 #include"../../../ramdisk/bas/RamDiskCatalogApi.bas"
 
-Sub Fastcall RamDiskCatalogWriteEntry(filename as string, fileptr as uinteger, filelen as uinteger)
+Function Fastcall RamDiskCatalogFreeRamDiskAddress() as uinteger
+Asm
+    ld hl,(RamDiskCatalogFreeRamDiskAddress)
+End Asm
+End Function
+
+Sub Fastcall RamDiskCatalogWriteIndexEntry(filename as string, fileptr as uinteger, filelen as uinteger)
 Asm
                 ; hl = filename
     pop af      ; return address to ZX Basic
@@ -23,7 +29,7 @@ Asm
     ;call RamDiskBankSwitch
 
     ex de,hl    ; hl = fileptr, de = filename
-    call RamDiskCatalogWriteEntry
+    call RamDiskCatalogWriteIndexEntry
 
     ;ld a,$05
     ;call RamDiskBankSwitch
@@ -31,15 +37,15 @@ Asm
 End Asm
 End Sub
 
-Function Fastcall RamDiskCatalogGetEntry(idx as uinteger) as uinteger
+Function Fastcall RamDiskCatalogGetIndexEntry(idx as uinteger) as uinteger
 Asm
-    jp RamDiskCatalogGetEntry  ; hl = filename address in catalog
+    jp RamDiskCatalogGetIndexEntry  ; hl = filename address in catalog
 End Asm
 End Function
 
 Function Fastcall RamDiskCatalogGetRamDiskAddress(idx as uinteger) as uinteger
 Asm
     ld a,RamDiskCatalogRamDiskOffset
-    jp RamDiskCatalogGetWord
+    jp RamDiskCatalogGetIndexWord
 End Asm
 End Function

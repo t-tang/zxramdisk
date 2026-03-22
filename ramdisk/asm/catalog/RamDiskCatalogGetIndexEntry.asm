@@ -14,7 +14,7 @@
 #define __LIBRARY_RAMDISK_CATEGORY_GET_ENTRY_ASM__
 
 #include"RamDiskCatalogGlobalVars.asm"
-RamDiskCatalogGetEntry:
+RamDiskCatalogGetIndexEntry:
 
     ; TODO: Verify catalog index entry actually exists
 

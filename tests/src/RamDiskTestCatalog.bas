@@ -9,22 +9,40 @@
 #include"util/TestUtils.bas"
 #include"util/RamDiskCatalogTestFns.bas"
 Cls
+CheckResult($0000, RamDiskCatalogGetIndexSize(), "Initial index size is 0")
+CheckResult(ERR_INVALID_ARGUMENT, RamDiskSave("test", $0000, $0000), "Cannot save 0 bytes")
+CheckResult(ERR_INVALID_FILE_NAME, RamDiskSave("", $0000, $0010), "Cannot save empty filename")
 
-CheckResult($0000, RamDiskCatalogGetSize(), "Initial Catalog size is 0")
-RamDiskCatalogWriteEntry("helloworld",$E101,$F000)
-CheckResult($0001, RamDiskCatalogGetSize(), "Catalog size with 1 entry")
-RamDiskCatalogWriteEntry("foobar",$E100,$00F0)
-CheckResult($0002, RamDiskCatalogGetSize(), "Catalog size with 2 entries")
+' ----------------------------------------------------------
+' Save first file
+' ----------------------------------------------------------
+CheckResult(ERR_OK, RamDiskSave("helloworld",$0000,$4000), "Successful Save (01)")
+CheckResult($0001, RamDiskCatalogGetIndexSize(), "Index size with 1 entry")
+CheckResult($BFFF, RamDiskCatalogGetFreeBytes(), "Free Bytes is updated (01)")
+CheckResult($4000, RamDiskCatalogFreeRamDiskAddress(), "Next Ram Disk address (01)")
+CheckTransfer($0000,$0000,$4000,"Saved to Ram Disk (01)")
 
-CheckResult($F000, RamDiskCatalogGetFileSize($0000), "File size is saved (01)")
-CheckResult($00F0, RamDiskCatalogGetFileSize($0001), "File size is saved (02)")
+' ----------------------------------------------------------
+' Save second file
+' ----------------------------------------------------------
+CheckResult(ERR_OK, RamDiskSave("foobar",$0000,$2000), "Successful Save (02)")
+CheckResult($0002, RamDiskCatalogGetIndexSize(), "Index size with 2 entries")
+CheckResult($9FFF, RamDiskCatalogGetFreeBytes(), "Free Bytes is updated (02)")
+CheckResult($6000, RamDiskCatalogFreeRamDiskAddress(), "Next Ram Disk address (02)")
+CheckTransfer($0000,$4000,$2000,"Saved to Ram Disk (02)")
 
-CheckResult($E101, RamDiskCatalogGetRamDiskAddress($0000), "Ram Disk address is saved (01)")
-CheckResult($E100, RamDiskCatalogGetRamDiskAddress($0001), "Ram Disk address is saved (02)")
+' ----------------------------------------------------------
+' Check Catalog Index Entries
+' ----------------------------------------------------------
+CheckResult($4000, RamDiskCatalogGetFileSize($0000), "File size is saved (01)")
+CheckResult($2000, RamDiskCatalogGetFileSize($0001), "File size is saved (02)")
+
+CheckResult($0000, RamDiskCatalogGetRamDiskAddress($0000), "Ram Disk address is saved (01)")
+CheckResult($4000, RamDiskCatalogGetRamDiskAddress($0001), "Ram Disk address is saved (02)")
 
 CheckString("helloworld", RamDiskCatalogGetFilename($0000), "Filename is helloworld (01)")
-CheckString("foobar", RamDiskCatalogGetFilename($0001), "Filename is foobar (01)")
-RamDiskCatalogWriteEntry("loremipsumdolor",$E101,$F000)
-CheckString("loremipsum", RamDiskCatalogGetFilename($0002), "Filename is truncated")
+CheckString("foobar", RamDiskCatalogGetFilename($0001), "Filename is foobar (02)")
+RamDiskCatalogWriteIndexEntry("loremipsumdolor",$E101,$F000)
+CheckString("loremipsum", RamDiskCatalogGetFilename($0002), "Long filename is truncated")
 
 stop
