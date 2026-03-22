@@ -9,6 +9,10 @@
 ' Contributed by Britlion
 ' --------------------------------------------------
 
+' --------------------------------------------------
+' Custom version of print42 supporting Udgs
+' --------------------------------------------------
+
 #pragma push(case_insensitive)
 #pragma case_insensitive = TRUE
 

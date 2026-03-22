@@ -23,6 +23,9 @@ RamDiskCatalogEntrySize  equ $10
 RamDiskCatalogStartAddr  equ $EBFF
 RamDiskCatalogFirstEntry equ RamDiskCatalogStartAddr - RamDiskCatalogEntrySize
 
+RamDiskCatalogRamDiskOffset  equ $0C
+RamDiskCatalogFileSizeOffset equ $0E
+
 ; ----------------------------------------------------------
 ; Catalog entries stored 
 ; ----------------------------------------------------------

@@ -5,6 +5,10 @@
 ; by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ; ----------------------------------------------------------
 
+; ----------------------------------------------------------
+; Export all Ram Disk Read Write assembly routines
+; ----------------------------------------------------------
+
 #ifndef __LIBRARY_RAM_DISK_READ_WRITE_ASM__
 #define __LIBRARY_RAM_DISK_READ_WRITE_ASM__
 

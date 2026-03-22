@@ -5,8 +5,12 @@
 ' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ' ----------------------------------------------------------
 
-#ifndef __LIBRARY_RAMDISK_WRITE_CATALOG_API__
-#define __LIBRARY_RAMDISK_WRITE_CATALOG_API__
+' ----------------------------------------------------------
+' ZX Basic Public Disk Catalog Api
+' ----------------------------------------------------------
+
+#ifndef __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__
+#define __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__
 
 Sub Fastcall RamDiskCatalogLoadCode()
 Asm
@@ -18,33 +22,7 @@ End Sub
 
 #include"RamDiskCheckMemoryBanks.bas"
 RamDiskCatalogLoadCode()
-'RamDiskCheckMemoryBanks() TODO: FIXME
-
-Sub Fastcall RamDiskCatalogWriteEntry(filename as string, fileptr as uinteger, filelen as uinteger)
-Asm
-                ; hl = filename
-    pop af      ; return address to ZX Basic
-    pop de      ; de = fileptr
-    pop bc      ; bc = length
-    push af     ; restore return address
-
-    ;ld a,$04    ; logical bank 4 (phys 7)
-    ;call RamDiskBankSwitch
-
-    ex de,hl    ; hl = fileptr, de = filename
-    call RamDiskCatalogWriteEntry
-
-    ;ld a,$05
-    ;call RamDiskBankSwitch
-
-End Asm
-End Sub
-
-Function Fastcall RamDiskCatalogGetEntry(idx as uinteger) as uinteger
-Asm
-    jp RamDiskCatalogGetEntry  ; hl = filename address in catalog
-End Asm
-End Function
+RamDiskCheckMemoryBanks()
 
 Function Fastcall RamDiskCatalogGetFilename(idx as uinteger) as string
 Asm
@@ -53,22 +31,11 @@ Asm
 End Asm
 End Function
 
-Function Fastcall RamDiskCatalogGetWord(idx as uinteger, offset as ubyte) as uinteger
+Function Fastcall RamDiskCatalogGetFileSize(idx as uinteger) as uinteger
 Asm
-    pop bc
-    pop af                      ; a = offset
-    push bc
-
+    ld a,RamDiskCatalogFileSizeOffset
     jp RamDiskCatalogGetWord
 End Asm
-End Function
-
-Function RamDiskCatalogGetFileSize(idx as uinteger) as uinteger
-    return RamDiskCatalogGetWord(idx,$0e)
-End Function
-
-Function RamDiskCatalogGetFilePtr(idx as uinteger) as uinteger
-    return RamDiskCatalogGetWord(idx,$0c)
 End Function
 
 Function Fastcall RamDiskCatalogGetSize() as uinteger

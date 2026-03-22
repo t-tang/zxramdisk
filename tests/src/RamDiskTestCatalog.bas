@@ -6,7 +6,7 @@
 ' ----------------------------------------------------------
 
 #include<hex.bas>
-#include"../../ramdisk/bas/RamDiskCatalogApi.bas"
+#include"util/RamDiskCatalogTestFns.bas"
 
 RamDiskCatalogWriteEntry("helloworld",$E101,$F000)
 RamDiskCatalogWriteEntry("foobar",$E100,$00F0)

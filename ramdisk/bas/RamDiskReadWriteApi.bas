@@ -5,8 +5,12 @@
 ' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ' ----------------------------------------------------------
 
-#ifndef __LIBRARY_RAMDISK_READ_WRITE_API__
-#define __LIBRARY_RAMDISK_READ_WRITE_API__
+' ----------------------------------------------------------
+' ZX Basic Read Write Api
+' ----------------------------------------------------------
+
+#ifndef __LIBRARY_RAMDISK_ZXBASIC_READ_WRITE_API__
+#define __LIBRARY_RAMDISK_ZXBASIC_READ_WRITE_API__
 Sub Fastcall RamDiskLoadCode()
 Asm
     ret
