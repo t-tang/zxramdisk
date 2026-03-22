@@ -19,8 +19,9 @@
 #ifndef __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 #define __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 
-RamDiskCatalogEntrySize equ $10
-RamDiskCatalogFirstEntry equ $EBFF - RamDiskCatalogEntrySize
+RamDiskCatalogEntrySize  equ $10
+RamDiskCatalogStartAddr  equ $EBFF
+RamDiskCatalogFirstEntry equ RamDiskCatalogStartAddr - RamDiskCatalogEntrySize
 
 ; ----------------------------------------------------------
 ; Catalog entries stored 

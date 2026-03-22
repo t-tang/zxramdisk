@@ -12,7 +12,7 @@ Sub Fastcall RamDiskCatalogLoadCode()
 Asm
     ret
     #include "../asm/readwrite/RamDiskBankSwitch.asm"
-    #include "../asm/RamDiskCatalogApi.asm"
+    #include "../asm/RamDiskCatalog.asm"
 End Asm
 End Sub
 
@@ -69,6 +69,12 @@ End Function
 
 Function RamDiskCatalogGetFilePtr(idx as uinteger) as uinteger
     return RamDiskCatalogGetWord(idx,$0c)
+End Function
+
+Function Fastcall RamDiskCatalogGetSize() as uinteger
+Asm
+    jp RamDiskCatalogGetSize
+End Asm
 End Function
 
 #endif

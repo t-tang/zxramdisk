@@ -6,5 +6,6 @@
 #include"catalog/RamDiskCatalogGetEntry.asm"
 #include"catalog/RamDiskCatalogGetFilename.asm"
 #include"catalog/RamDiskCatalogGetWord.asm"
+#include"catalog/RamDiskCatalogGetSize.asm"
 
 #endif

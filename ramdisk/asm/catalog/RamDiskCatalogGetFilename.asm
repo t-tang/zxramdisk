@@ -28,7 +28,6 @@ RamDiskCatalogGetFilename:
     call RamDiskCatalogGetEntry ; hl = filename address in catalog
     pop de                  ; de = heap ptr
     ld bc,$0c               ; filename is max 12 bytes
-    ld($0001),a
     ldir
     pop hl                  ; string ptr
     ret
