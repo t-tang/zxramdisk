@@ -32,27 +32,27 @@ Const ERR_INVALID_FILE_NAME   as ubyte = D_ERR_INVALID_FILE_NAME
 Const ERR_FILE_ALREADY_EXISTS as ubyte = D_ERR_FILE_ALREADY_EXISTS
 Const ERR_FILE_DOES_NOT_EXIST as ubyte = D_ERR_FILE_DOES_NOT_EXIST
 
-Function Fastcall RamDiskCatalogGetFilename(idx as uinteger) as string
+Function Fastcall RamDiskFilename(idx as uinteger) as string
 Asm
     call RamDiskCatalogGetFilename
     ret
 End Asm
 End Function
 
-Function Fastcall RamDiskCatalogGetFileSize(idx as uinteger) as uinteger
+Function Fastcall RamDiskFileSize(idx as uinteger) as uinteger
 Asm
     ld a,RamDiskCatalogFileSizeOffset
     jp RamDiskCatalogGetIndexWord
 End Asm
 End Function
 
-Function Fastcall RamDiskCatalogGetIndexSize() as uinteger
+Function Fastcall RamDiskIndexSize() as uinteger
 Asm
     jp RamDiskCatalogGetIndexSize
 End Asm
 End Function
 
-Function Fastcall RamDiskCatalogGetFreeBytes() as uinteger
+Function Fastcall RamDiskFreeBytes() as uinteger
 Asm
     jp RamDiskCatalogGetFreeBytes
 End Asm
