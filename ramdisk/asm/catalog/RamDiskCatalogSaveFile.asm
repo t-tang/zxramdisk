@@ -12,40 +12,64 @@
 ; ----------------------------------------------------------
 Proc
 RamDiskCatalogSaveFile:
-    ld a,b
-    xor c
-    jr nz, checkfilelen
-
-    ld a,D_ERR_INVALID_ARGUMENT
-    ret
-
-checkfilelen:
-local checkfilelen:
-    ld a,(hl)
-    or a
-    jr nz,checkfreebytes
-
-    ld a,D_ERR_INVALID_FILE_NAME
-    ret
 
 checkfreebytes:
 local checkfreebytes:
-    push hl     ; save filename
-    push de     ; save main memory source address
-
+    push bc
+    exx         ; save de = main memory address, hl = filename, bc = length
+    pop bc
     call RamDiskCatalogGetFreeBytes ; hl = free bytes
-    ld a,h
-    or l
-    jr nz,checkcatalogsize
+    or a        ; clear carry flag
+    sbc hl,bc   
+    jr nc,checkcatalogsize
     
-    pop af      ; discard main memory source address
-    pop af      ; discard filename
     ld a,D_ERR_OUT_OF_MEMORY
     ret
 
 checkcatalogsize:
 local checkcatalogsize:
-    ; TODO: FIXME
+    call RamDiskCatalogGetIndexSize  ; hl = number of catalog entries
+    ld de,RamDiskCatalogMaxIndexEntries
+    or a        ; clear carry flag
+    sbc hl,de
+    jr c,checkfileexists
+
+    ld a,D_ERR_OUT_OF_MEMORY
+    ret
+
+checkfileexists:
+local checkfileexists:
+    exx
+    push hl
+    exx
+    pop hl
+    call RamDiskCatalogGetIndexPtr
+    ld a,h
+    or l
+    jr z,checkfilelen
+
+    ld a,D_ERR_FILE_ALREADY_EXISTS
+    ret
+
+checkfilelen:
+local checkfilelen:
+    exx
+
+    ld a,(hl)
+    or a
+    jr nz,checkbyteslen
+
+    ld a,D_ERR_INVALID_FILE_NAME
+    ret
+
+checkbyteslen:
+local checkbyteslen:
+    ld a,b
+    or c
+    jr nz,ramdiskcatalogwritefile
+
+    ld a,D_ERR_INVALID_ARGUMENT
+    ret
 
 ; ----------------------------------------------------------
 ; in : hl = filename
@@ -54,8 +78,7 @@ local checkcatalogsize:
 ; ----------------------------------------------------------
 ramdiskcatalogwritefile:
 local ramdiskcatalogwritefile:
-    pop de          ; main memory source address
-
+    push hl         ; save filename
     push bc         ; save bytes length
 
     ld hl,(RamDiskCatalogFreeRamDiskAddress)

@@ -7,7 +7,7 @@
 
 ; ----------------------------------------------------------
 ; in  : hl = filename
-; out : hl = index entry address
+; out : hl = index entry address or $0000 if filename not found
 ; ----------------------------------------------------------
 
 Proc
@@ -27,21 +27,19 @@ RamDiskCatalogGetIndexPtr:
 
 nextindexentry:
 local nextindexentry:
-    push de
-    push hl
+    push de         ; save filename
+    push hl         ; save index entry ptr
     call stringequals
     jr z,foundindexentry
 
     pop hl      ; hl = index entry ptr
     ld de,RamDiskCatalogEntrySize
-    jr z,foundindexentry
     add hl,de   ; next index entry
     pop de      ; retrieve filename
 
-    dec c
-    jr nz,nextindexentry
-
-    dec b
+    dec bc
+    ld a,b
+    or c
     jr nz,nextindexentry
     jr notfound
 

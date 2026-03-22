@@ -20,7 +20,7 @@ RamDiskCatalogLoadFile:
     jr nz, loadfile                 ; filename was not found
 
     pop af      ; drop main memory address
-    ld a,D_ERR_INVALID_FILE_NAME    ; TODO: change to file does not exist
+    ld a,D_ERR_FILE_DOES_NOT_EXIST
     ret
     
 loadfile:

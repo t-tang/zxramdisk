@@ -22,5 +22,6 @@
 #include"catalog/RamDiskCatalogSaveFile.asm"
 #include"catalog/RamDiskCatalogLoadFile.asm"
 #include"catalog/RamDiskCatalogGetFreeBytes.asm"
+#include"catalog/RamDiskCatalogClear.asm"
 
 #endif

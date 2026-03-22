@@ -25,6 +25,13 @@ End Sub
 RamDiskCatalogLoadCode()
 RamDiskCheckMemoryBanks()
 
+Const ERR_OK                  as ubyte = D_ERR_OK
+Const ERR_OUT_OF_MEMORY       as ubyte = D_ERR_OUT_OF_MEMORY
+Const ERR_INVALID_ARGUMENT    as ubyte = D_ERR_INVALID_ARGUMENT
+Const ERR_INVALID_FILE_NAME   as ubyte = D_ERR_INVALID_FILE_NAME
+Const ERR_FILE_ALREADY_EXISTS as ubyte = D_ERR_FILE_ALREADY_EXISTS
+Const ERR_FILE_DOES_NOT_EXIST as ubyte = D_ERR_FILE_DOES_NOT_EXIST
+
 Function Fastcall RamDiskCatalogGetFilename(idx as uinteger) as string
 Asm
     call RamDiskCatalogGetFilename
@@ -51,11 +58,6 @@ Asm
 End Asm
 End Function
 
-Const ERR_OK as ubyte = D_ERR_OK
-Const ERR_OUT_OF_MEMORY     as ubyte = D_ERR_OUT_OF_MEMORY
-Const ERR_INVALID_ARGUMENT  as ubyte = D_ERR_INVALID_ARGUMENT
-Const ERR_INVALID_FILE_NAME as ubyte = D_ERR_INVALID_FILE_NAME
-
 Function Fastcall RamDiskSave(filename as string, sourceAddress as uinteger, length as uinteger) as ubyte
 Asm
     pop af          ; ZX Basic return address
@@ -79,5 +81,11 @@ Proc
 EndP
 End Asm
 End Function
+
+Sub Fastcall RamDiskClear()
+Asm
+    jp RamDiskCatalogClear
+End Asm
+End Sub
 
 #endif

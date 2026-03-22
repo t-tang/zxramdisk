@@ -19,10 +19,13 @@
 #ifndef __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 #define __LIBRARY_RAMDISK_CATALOG_GLOBAL_VARS_ASM__
 
-#define D_ERR_OK                00
-#define D_ERR_OUT_OF_MEMORY     04
-#define D_ERR_INVALID_ARGUMENT  10
-#define D_ERR_INVALID_FILE_NAME 15
+#define D_ERR_OK                  $00
+#define D_ERR_OUT_OF_MEMORY       $04
+#define D_ERR_INVALID_ARGUMENT    $0A
+#define D_ERR_INVALID_FILE_NAME   $0E
+#define D_ERR_FILE_ALREADY_EXISTS $20
+#define D_ERR_FILE_DOES_NOT_EXIST $23
+
 
 RamDiskCatalogEntrySize  equ $10
 RamDiskCatalogStartAddr  equ $EBFF
@@ -30,6 +33,10 @@ RamDiskCatalogFirstEntry equ RamDiskCatalogStartAddr - RamDiskCatalogEntrySize
 
 RamDiskCatalogRamDiskOffset  equ $0C
 RamDiskCatalogFileSizeOffset equ $0E
+
+#ifndef RamDiskCatalogMaxIndexEntries
+RamDiskCatalogMaxIndexEntries equ (RamDiskCatalogStartAddr - $C000) / RamDiskCatalogEntrySize
+#endif
 
 ; ----------------------------------------------------------
 ; Catalog entries stored 
