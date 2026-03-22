@@ -16,6 +16,8 @@
 #include"RamDiskCatalogGlobalVars.asm"
 RamDiskCatalogGetEntry:
 
+    ; TODO: Verify catalog index entry actually exists
+
     ld de,RamDiskCatalogFirstEntry
     ld a,(de)
     or a

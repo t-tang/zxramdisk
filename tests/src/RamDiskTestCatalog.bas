@@ -8,6 +8,7 @@
 #include<hex.bas>
 #include"../../ramdisk/bas/RamDiskCatalogApi.bas"
 
-RamDiskCatalogWriteEntry("helloworld",$E101,$00F0)
+RamDiskCatalogWriteEntry("helloworld",$E101,$F000)
 RamDiskCatalogWriteEntry("foobar",$E100,$00F0)
-print RamDiskCatalogGetFileName($00)
+print RamDiskCatalogGetFilename($00), hex16(RamDiskCatalogGetFileSize($00))
+print RamDiskCatalogGetFilename($01), hex16(RamDiskCatalogGetFileSize($01))
