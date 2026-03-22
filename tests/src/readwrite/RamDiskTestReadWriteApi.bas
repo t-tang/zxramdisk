@@ -9,7 +9,7 @@
 ' Unit tests for the public ReadWrite Api
 ' ----------------------------------------------------------
 
-#include"../../ramdisk/bas/RamDiskReadWriteApi.bas"
+#include"../../../ramdisk/bas/RamDiskReadWriteApi.bas"
 
 Load "Test.scr" Code $C000
 RamDiskWrite($C000,$C000,6912)

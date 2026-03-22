@@ -6,8 +6,8 @@
 ' ----------------------------------------------------------
 
 #include<hex.bas>
-#include"util/TestUtils.bas"
-#include"util/RamDiskCatalogTestFns.bas"
+#include"src/util/TestUtils.bas"
+#include"src/catalog/RamDiskCatalogTestFns.bas"
 Cls
 
 CheckResult($0000, RamDiskCatalogGetIndexSize(), "Initial index size is 0")
