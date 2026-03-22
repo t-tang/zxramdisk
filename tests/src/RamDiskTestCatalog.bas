@@ -10,5 +10,6 @@
 
 RamDiskCatalogWriteEntry("helloworld",$E101,$F000)
 RamDiskCatalogWriteEntry("foobar",$E100,$00F0)
+print RamDiskCatalogGetSize()
 print RamDiskCatalogGetFilename($00), hex16(RamDiskCatalogGetFileSize($00))
 print RamDiskCatalogGetFilename($01), hex16(RamDiskCatalogGetFileSize($01))
