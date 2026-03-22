@@ -54,84 +54,6 @@ Asm
 End Asm
 End Function
 
-Function Fastcall RamDiskCatalogGetIndexEntryPtr(filename as string) as uinteger
-Asm
-Proc
-RamDiskCatalogGetIndexEntryPtr:
-    push hl         ; save filename
-    call RamDiskCatalogGetIndexSize ; hl = number of catalog entries
-    ld a,h
-    or l
-    jr z,emptyindex ; empty catalog
-
-    ld b,h
-    ld c,l          ; bc = index size
-    ld hl,(RamDiskFreeCatalogEntryPtr)
-    ld de,RamDiskCatalogEntrySize
-    add hl,de       ; last index entry
-    pop de          ; de = filename
-
-nextindexentry:
-local nextindexentry:
-    push de
-    push hl
-    call stringequals
-    jr z,foundindexentry
-
-    pop hl      ; hl = index entry ptr
-    ld de,RamDiskCatalogEntrySize
-    jr z,foundindexentry
-    add hl,de   ; next index entry
-    pop de      ; retrieve filename
-
-    dec c
-    jr nz,nextindexentry
-
-    dec b
-    jr nz,nextindexentry
-    jr notfound
-
-emptyindex:
-local emptyindex:
-    pop af      ; drop filename
-notfound:
-local notfound:
-    xor a
-    ld h,a
-    ld l,a
-    ret
-
-foundindexentry:
-local foundindexentry:
-    pop hl      ; hl = index entry ptr
-    pop de      ; drop filename
-    ret
-
-stringequals:
-local stringequals:
-    ld a,(de)   ; lsb str len
-    cp (hl)
-    ret nz      ; str not equals
-
-    inc hl      ; msb str len
-    inc de
-    inc hl      ; skip msb str len
-    inc de
-
-nextchar:
-local nextchar:
-    ex af,af'   ; a' = str len
-    ld a,(de)   ; a = str char
-    cp (hl)
-    ret nz      ; str not equals
-    ex af,af'   ; a = str len
-    dec a
-    ret z
-    jr nextchar
-EndP
-End Asm
-End Function
-
 Sub Fastcall RamDiskCatalogWriteFile(filename as string, mainmemoryAddress as uinteger, bytesLen as uinteger)
 Asm
                     ; hl = filename
@@ -168,7 +90,7 @@ Const ERR_INVALID_FILE_NAME as ubyte = 15
 Function RamDiskSave(filename as string, sourceAddress as uinteger, length as uinteger) as ubyte
     If length = 0 Then Return ERR_INVALID_ARGUMENT
     If Not Len(filename) Then Return ERR_INVALID_FILE_NAME
-    If RamDiskCatalogGetIndexSize() = 5 Then Return ERR_OUT_OF_MEMORY
+    If RamDiskCatalogGetIndexSize() = 5 Then Return ERR_OUT_OF_MEMORY ' TODO: FIXME
     If RamDiskCatalogGetFreeBytes() < length Then Return ERR_OUT_OF_MEMORY
 
     RamDiskCatalogWriteFile(filename, sourceAddress,length)
@@ -184,13 +106,13 @@ Proc
 
     push de     ; save main memory address
 
-    call RamDiskCatalogGetIndexEntryPtr ; hl = index entry ptr
+    call RamDiskCatalogGetIndexPtr  ; hl = index entry ptr
     ld a,h
     or l
-    jr nz, loadfile
+    jr nz, loadfile                 ; filename was not found
 
     pop af      ; drop main memory address
-    ld a,$0F     ; ERR_INVALID_FILE_NAME
+    ld a,$0F    ; ERR_INVALID_FILE_NAME
     ret
     
 loadfile:

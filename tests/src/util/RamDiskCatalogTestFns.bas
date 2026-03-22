@@ -17,6 +17,12 @@ Asm
 End Asm
 End Function
 
+Function Fastcall RamDiskCatalogGetIndexPtr(filename as string) as uinteger
+Asm
+    jp RamDiskCatalogGetIndexPtr
+End Asm
+End Function
+
 Sub Fastcall RamDiskCatalogWriteIndexEntry(filename as string, fileptr as uinteger, filelen as uinteger)
 Asm
                 ; hl = filename

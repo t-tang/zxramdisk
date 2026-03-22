@@ -46,7 +46,7 @@ CheckString("helloworld", RamDiskCatalogGetFilename($0000), "Filename is hellowo
 CheckString("foobar", RamDiskCatalogGetFilename($0001), "Filename is foobar (02)")
 RamDiskCatalogWriteIndexEntry("loremipsumdolor",$E101,$F000)
 CheckString("loremipsum", RamDiskCatalogGetFilename($0002), "Long filename is truncated")
-CheckResult($EBDF, RamDiskCatalogGetIndexEntryPtr("foobar"), "Find foobar in catalog")
+CheckResult($EBDF, RamDiskCatalogGetIndexPtr("foobar"), "Find foobar in catalog")
 CheckResult($000F, RamDiskLoad("twasbrilig",$0000), "Load bad filename fails")
 
 Border 0 : Pause 0

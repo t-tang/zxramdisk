@@ -18,5 +18,6 @@
 #include"catalog/RamDiskCatalogGetFilename.asm"
 #include"catalog/RamDiskCatalogGetIndexWord.asm"
 #include"catalog/RamDiskCatalogGetIndexSize.asm"
+#include"catalog/RamDiskCatalogGetIndexPtr.asm"
 
 #endif
