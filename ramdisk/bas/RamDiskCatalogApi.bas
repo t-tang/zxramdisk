@@ -6,7 +6,7 @@
 ' ----------------------------------------------------------
 
 ' ----------------------------------------------------------
-' ZX Basic Public Disk Catalog Api
+' ZX Basic Ram Disk Public Disk Catalog Api
 ' ----------------------------------------------------------
 
 #ifndef __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__

@@ -37,7 +37,7 @@ Asm
 End Asm
 End Function
 
-Function RamDiskCatalogGetFilePtr(idx as uinteger) as uinteger
+Function Fastcall RamDiskCatalogGetRamDiskAddress(idx as uinteger) as uinteger
 Asm
     ld a,RamDiskCatalogRamDiskOffset
     jp RamDiskCatalogGetWord

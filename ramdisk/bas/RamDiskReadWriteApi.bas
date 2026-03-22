@@ -6,7 +6,7 @@
 ' ----------------------------------------------------------
 
 ' ----------------------------------------------------------
-' ZX Basic Read Write Api
+' ZX Basic Ram Disk Public Read Write Api
 ' ----------------------------------------------------------
 
 #ifndef __LIBRARY_RAMDISK_ZXBASIC_READ_WRITE_API__

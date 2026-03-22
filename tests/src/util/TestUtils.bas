@@ -26,6 +26,18 @@ Sub CheckResult(actualResult as uinteger, expectedResult as uinteger, testDesc a
     print42(tmpStr) 
 End Sub
 
+Sub CheckString(actualResult as string, expectedResult as string, testDesc as string)
+    if actualResult = expectedResult THEN
+        tmpStr = "\A"
+    ELSE
+        tmpStr = "\B"
+    END IF
+
+    tmpStr = tmpStr + " " + hex16(Len(actualResult)) + " " + hex16(Len(expectedResult)) + " " +  testDesc + chr(13)
+    ink (((actualResult <> expectedResult) * 2))
+    print42(tmpStr) 
+End Sub
+
 Function MainMemoryCheckSum(sourceAddress as uinteger, byteCount as uinteger) as uinteger
     dim srcXorCheck, srcSumCheck, aByte as ubyte
     for i = 0 to byteCount - 1
