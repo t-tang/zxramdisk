@@ -5,7 +5,6 @@
 ' by Tat Tang (a.k.a choisum) <https://github.com/t-tang>
 ' ----------------------------------------------------------
 
-#include<hex.bas>
 #include"../ramdisk/bas/RamDiskCheckMemoryBanks.bas"
 
 #include"src/readwrite/RamDiskTestFns.bas"

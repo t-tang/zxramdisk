@@ -11,7 +11,6 @@
 
 #ifndef __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__
 #define __LIBRARY_RAMDISK_ZXBASIC_CATALOG_API__
-#include<hex.bas>
 
 Sub Fastcall RamDiskCatalogLoadCode()
 Asm

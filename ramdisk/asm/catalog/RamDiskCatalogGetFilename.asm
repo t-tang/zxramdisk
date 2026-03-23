@@ -13,7 +13,9 @@
 #ifndef __LIBRARY_RAMDISK_CATEGORY_GET_FILENAME_ASM__
 #define __LIBRARY_RAMDISK_CATEGORY_GET_FILENAME_ASM__
 
+#include<mem/alloc.asm>
 #include"RamDiskCatalogGetIndexEntry.asm"
+
 RamDiskCatalogGetFilename:
     push hl                 ; save index argument
     ld bc,$0c               ; filename is max 12 bytes
