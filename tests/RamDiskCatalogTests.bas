@@ -48,12 +48,17 @@ CheckResult(ERR_FILE_ALREADY_EXISTS, RamDiskSave("foobar",$0000,$2000), "Duplica
 CheckResult($0000, RamDiskCatalogGetIndexEntry($FF), "Out of bounds index")
 CheckResult($0000, Len(RamDiskFilename($FF)), "Out of bounds filename")
 CheckResult($0000, RamDiskFileSize($FF), "Out of bounds file size")
-RamDiskCatalogWriteIndexEntry("loremipsumdolor",$E101,$F000)
+CheckResult(ERR_OK, RamDiskSave("loremipsumdolor",$E101,$0001),"Save long filename")
 CheckString("loremipsum", RamDiskFilename($0002), "Long filename is truncated")
 CheckResult($EBDF, RamDiskCatalogGetIndexPtr("foobar"), "Find foobar in catalog")
 CheckResult(ERR_FILE_DOES_NOT_EXIST, RamDiskLoad("twasbrilig",$0000), "Load bad filename fails")
 CheckResult(ERR_OK, RamDiskSave("foobar1",$0000,$2000), "Successful Save (03)")
-CheckResult(ERR_OUT_OF_MEMORY, RamDiskSave("foobar2",$0000,$2000), "Successful Save (04)")
+CheckResult(ERR_OUT_OF_MEMORY, RamDiskSave("foobar2",$0000,$2000), "Catalog is full")
+
+Dim expectedFilenames(3) as String: for i = 0 to RamDiskIndexSize() - 1: Read expectedFilenames(i): Next : Data "helloworld","foobar","loremipsum","foobar1"
+Dim filenames(3) as String: for i = 0 to RamDiskIndexSize() - 1 : filenames(i) = RamDiskFilename(i): next
+CheckResult($0003, StrArrayEquals(expectedFilenames, filenames, 3), "Enumerate filenames")
+for i = 0 to RamDiskIndexSize() - 1: print42(filenames(i)): next
 
 Border 1 : Pause 250 : Cls : printat42(0,0)
 

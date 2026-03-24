@@ -74,3 +74,11 @@ Sub CheckTransfer(sourceAddress as uinteger, ramdiskAddress as uinteger, byteCou
 
 End Sub
 
+Function StrArrayEquals(ByRef array1() as string, ByRef array2() as string, arraylen as ubyte) as uinteger
+    dim matchcount as ubyte
+    for i = 1 to arraylen
+        if array1(i) = array2(i) then matchcount = matchcount + 1
+    next
+    return matchcount
+End Function
+
