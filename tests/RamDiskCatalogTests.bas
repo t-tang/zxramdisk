@@ -58,14 +58,15 @@ CheckResult(ERR_OUT_OF_MEMORY, RamDiskSave("foobar2",$0000,$2000), "Catalog is f
 Dim expectedFilenames(3) as String: for i = 0 to RamDiskIndexSize() - 1: Read expectedFilenames(i): Next : Data "helloworld","foobar","loremipsum","foobar1"
 Dim filenames(3) as String: for i = 0 to RamDiskIndexSize() - 1 : filenames(i) = RamDiskFilename(i): next
 CheckResult($0003, StrArrayEquals(expectedFilenames, filenames, 3), "Enumerate filenames")
-for i = 0 to RamDiskIndexSize() - 1: print42(filenames(i)): next
+
+RamDiskClear()
+CheckResult($0000, RamDiskIndexSize(), "Ram disk clear")
 
 Border 1 : Pause 250 : Cls : printat42(0,0)
 
 ' ----------------------------------------------------------
 ' Screen Test
 ' ----------------------------------------------------------
-RamDiskClear()
 Load "Test2.scr" Code $C000
 RamDiskSave("Test2.scr",$C000,6912)
 RamDiskLoad("Test2.scr",$4000)
