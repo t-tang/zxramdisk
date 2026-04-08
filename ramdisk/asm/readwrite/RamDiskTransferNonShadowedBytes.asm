@@ -8,7 +8,7 @@
 #ifndef __LIBRARY_RAMDISK_TRANSFER_NON_SHADOWED_BYTES_ASM__
 #define __LIBRARY_RAMDISK_TRANSFER_NON_SHADOWED_BYTES_ASM__
 
-#include"RamDiskBankSwitch.asm"
+#include"../memorybanks/RamDiskBankSwitch.asm"
 #include"RamDiskBankSwitchToAddress.asm"
 #include"RamDiskRebaseAddress.asm"
 

@@ -14,12 +14,19 @@ Proc
 RamDiskCatalogLoadFile:
     push de     ; save main memory address
 
+    ld a,RAMDISK_LOGICAL_INDEX_BANK
+    call RamDiskBankSwitch
+
     call RamDiskCatalogGetIndexPtr  ; hl = index entry ptr
     ld a,h
     or l
     jr nz, loadfile                 ; filename was not found
 
     pop af      ; drop main memory address
+
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
+
     ld a,D_ERR_FILE_DOES_NOT_EXIST
     ret
     
@@ -41,5 +48,9 @@ local loadfile:
     pop hl      ; hl = main memory address
     
     ld a,$01    ; $01 = transfer from ram disk to main memory
-    jp RamDiskTransferMemory
+    call RamDiskTransferMemory
+
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    jp RamDiskBankSwitch
+
 EndP

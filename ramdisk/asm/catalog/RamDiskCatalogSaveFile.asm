@@ -39,6 +39,10 @@ local checkcatalogsize:
 
 checkfileexists:
 local checkfileexists:
+
+    ld a,RAMDISK_LOGICAL_INDEX_BANK
+    call RamDiskBankSwitch
+
     exx
     push hl
     exx
@@ -47,6 +51,9 @@ local checkfileexists:
     ld a,h
     or l
     jr z,checkfilelen
+
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
 
     ld a,D_ERR_FILE_ALREADY_EXISTS
     ret
@@ -59,6 +66,9 @@ local checkfilelen:
     or a
     jr nz,checkbyteslen
 
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
+
     ld a,D_ERR_INVALID_FILE_NAME
     ret
 
@@ -67,6 +77,9 @@ local checkbyteslen:
     ld a,b
     or c
     jr nz,ramdiskcatalogwritefile
+
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
 
     ld a,D_ERR_INVALID_ARGUMENT
     ret
@@ -78,6 +91,9 @@ local checkbyteslen:
 ; ----------------------------------------------------------
 ramdiskcatalogwritefile:
 local ramdiskcatalogwritefile:
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
+
     push hl         ; save filename
     push bc         ; save bytes length
 

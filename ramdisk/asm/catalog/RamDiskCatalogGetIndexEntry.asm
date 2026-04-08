@@ -19,9 +19,9 @@ Proc
 RamDiskCatalogGetIndexEntry:
 
     ld de,RamDiskCatalogFirstEntry
-    ld a,(de)
-    or a
-    jr z,notfound   ; empty catalog
+    ;ld a,(de)
+    ;or a
+    ;jr z,notfound   ; empty catalog
 
     add hl,hl       ; mult2
     add hl,hl       ; mult4

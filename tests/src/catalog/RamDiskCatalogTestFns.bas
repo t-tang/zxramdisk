@@ -19,7 +19,13 @@ End Function
 
 Function Fastcall RamDiskCatalogGetIndexPtr(filename as string) as uinteger
 Asm
-    jp RamDiskCatalogGetIndexPtr
+    ld a,RAMDISK_LOGICAL_INDEX_BANK
+    call RamDiskBankSwitch
+
+    call RamDiskCatalogGetIndexPtr
+
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
 End Asm
 End Function
 
@@ -31,14 +37,8 @@ Asm
     pop bc      ; bc = length
     push af     ; restore return address
 
-    ;ld a,$04    ; logical bank 4 (phys 7)
-    ;call RamDiskBankSwitch
-
     ex de,hl    ; hl = fileptr, de = filename
     call RamDiskCatalogWriteIndexEntry
-
-    ;ld a,$05
-    ;call RamDiskBankSwitch
 
 End Asm
 End Sub

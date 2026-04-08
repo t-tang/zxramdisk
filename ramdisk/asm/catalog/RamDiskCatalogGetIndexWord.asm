@@ -23,6 +23,9 @@ RamDiskCatalogGetIndexWord:
     or h                        ; is the index argument out of bounds?
     ret z                       ; index argument is out of bounds
 
+    ld a,RAMDISK_LOGICAL_INDEX_BANK
+    call RamDiskBankSwitch
+
     xor a
     ld d,a
     ex af,af'       ; retrieve offset
@@ -33,5 +36,7 @@ RamDiskCatalogGetIndexWord:
     inc hl
     ld h,(hl)       ; grab msb uint16
     ld l,a          ; hl = file size
-    ret
+
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    jp RamDiskBankSwitch
 #endif

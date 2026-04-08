@@ -31,6 +31,12 @@ PROC
 
 copynamelen:
 local copynamelen:
+
+    ex af,af'                   ; save filename length
+    ld a,RAMDISK_LOGICAL_INDEX_BANK
+    call RamDiskBankSwitch      ; copy filename to index bank
+    ex af,af'
+
     ld (hl),a                   ; copy lsb file name len
     inc hl                      ; next catalog entry byte
     inc de                      ; move to msb filename len
@@ -66,6 +72,9 @@ local copyfileptr:
     ld (hl),b                   ; copy msb length
 
 ; advance the free ptr
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
+
     ld hl,(RamDiskFreeCatalogEntryPtr)
     ld de,RamDiskCatalogEntrySize
     or a

@@ -12,6 +12,9 @@
 
 Proc
 RamDiskCatalogGetIndexPtr:
+
+    ; assert physical bank 7 is active
+
     push hl         ; save filename
     call RamDiskCatalogGetIndexSize ; hl = number of catalog entries
     ld a,h

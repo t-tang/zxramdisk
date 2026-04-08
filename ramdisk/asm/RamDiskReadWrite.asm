@@ -14,7 +14,7 @@
 
 #include"readwrite/RamDiskTransferGlobalVars.asm"
 
-#include"readwrite/RamDiskBankSwitch.asm"
+#include"memorybanks/RamDiskBankSwitch.asm"
 #include"readwrite/RamDiskRebaseAddress.asm"
 #include"readwrite/RamDiskBankSwitchToAddress.asm"
 

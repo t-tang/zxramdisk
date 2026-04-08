@@ -15,7 +15,6 @@ RamDiskBankSwitch
 PROC
 
     RAMDISK_BANK_M equ $5B5C 
-    local RAMDISK_BANK_M
 
     push bc            ; save bc for convenience of callers
 
@@ -46,15 +45,21 @@ local setphysicalbank:
 ; this arrangement means the top two bits of
 ; ram disk address identify the logical bank
 ;----------------------------------------------
+RAMDISK_PHYS_INDEX_BANK equ $07
+RAMDISK_PHYS_MAIN_BANK  equ $00
+
+RAMDISK_LOGICAL_INDEX_BANK equ $04
+RAMDISK_LOGICAL_MAIN_BANK  equ $05
+
 logicalbanks:
 local logicalbanks:
     ;physical         logical
-    db $01          ; logical bank 0
-    db $03          ; logical bank 1
-    db $04          ; logical bank 2
-    db $06          ; logical bank 3
-    db $07          ; logical bank 4
-    db $00          ; logical bank 5
+    db $01          ; logical bank 0 - ramdisk storage $0000 - $3FFF
+    db $03          ; logical bank 1 - ramdisk storage $4000 - $7FFF
+    db $04          ; logical bank 2 - ramdisk storage $8000 - $BFFF
+    db $06          ; logical bank 3 - ramdisk storage $C000 - $FFFF
+    db RAMDISK_PHYS_INDEX_BANK ; logical bank 4 - catalog index
+    db RAMDISK_PHYS_MAIN_BANK  ; logical bank 5 - regular (main) memory
 
 ENDP
 #endif

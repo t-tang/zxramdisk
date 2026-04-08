@@ -35,10 +35,17 @@ RamDiskCatalogGetFilename:
     or l                    ; index out of bounds
     ret z
 
+    ld a,RAMDISK_LOGICAL_INDEX_BANK
+    call RamDiskBankSwitch
+
     push de                 ; save heap ptr
     ld bc,$0c               ; filename is max 12 bytes
     ldir
     pop hl                  ; string ptr
+
+    ld a,RAMDISK_LOGICAL_MAIN_BANK
+    call RamDiskBankSwitch
+
     ret
 
 #endif

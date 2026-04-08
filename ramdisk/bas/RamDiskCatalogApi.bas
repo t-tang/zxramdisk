@@ -15,7 +15,7 @@
 Sub Fastcall RamDiskCatalogLoadCode()
 Asm
     ret
-    #include "../asm/readwrite/RamDiskBankSwitch.asm"
+    #include "../asm/memorybanks/RamDiskBankSwitch.asm"
     #include "../asm/RamDiskCatalog.asm"
     #include "../asm/RamDiskReadWrite.asm"
 End Asm
