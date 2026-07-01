@@ -1,5 +1,5 @@
 # ZX RamDisk 
-This is a Ram Disk implementation for Boriel Basic currently under development. There are two Apis available, one which is analogous to the original Load! and Save! commands and a Read-Write Api which is lower level and treats the Ram Disk area as a linear address space.
+This is a Spectrum 128K Ram Disk implementation for Boriel Basic currently under development. There are two Apis available, one which is analogous to the original Load! and Save! commands and a Read-Write Api which is lower level and treats the Ram Disk area as a linear address space.
 
 ### Catalog Api
 The Catalog Api is analgous to the original Load! and Save! commands
