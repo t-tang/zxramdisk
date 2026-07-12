@@ -24,9 +24,9 @@ RamDiskCatalogGetFilename:
     pop namespace
     ld a,h
     or l
+    pop de                  ; de = catalog entry index, stack contains ret addr
     ret z                   ; check heap exhausted
-
-    pop de                  ; de = catalog entry index
+    
     push hl                 ; save heap ptr for return
     ex de,hl                ; hl = catalog entry index
     call RamDiskCatalogGetIndexEntry ; hl = filename address in catalog
